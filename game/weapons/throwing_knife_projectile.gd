@@ -11,8 +11,10 @@ var radius := 3.0
 var remaining_hits := 1
 var damage_source: Object
 var damage_tag: StringName = &"shared_weapon_throwing_knives"
+const KNIFE_SPRITE: Texture2D = preload("res://art/vfx/knives/throwing_knife_v1.png")
 var _remaining_lifetime := 0.0
 var _hit_ids: Dictionary = {}
+var _sprite: Sprite2D
 
 
 func configure(spawn_position: Vector2, shot_direction: Vector2, shot_speed: float, shot_damage: float, shot_lifetime: float, shot_radius: float, pierce_count: int, source: Object, tag: StringName) -> void:
@@ -27,7 +29,6 @@ func configure(spawn_position: Vector2, shot_direction: Vector2, shot_speed: flo
 	damage_tag = tag
 	_remaining_lifetime = lifetime_seconds
 	rotation = direction.angle()
-	queue_redraw()
 
 
 func _ready() -> void:
@@ -40,6 +41,10 @@ func _ready() -> void:
 	shape.radius = radius
 	collision.shape = shape
 	add_child(collision)
+	_sprite=Sprite2D.new()
+	_sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.texture=KNIFE_SPRITE
+	add_child(_sprite)
 	body_entered.connect(_on_body_entered)
 	area_entered.connect(_on_area_entered)
 
@@ -49,12 +54,6 @@ func _physics_process(delta: float) -> void:
 	_remaining_lifetime -= delta
 	if _remaining_lifetime <= 0.0:
 		queue_free()
-
-
-func _draw() -> void:
-	var blade := PackedVector2Array([Vector2(8, 0), Vector2(-6, -3), Vector2(-6, 3)])
-	draw_colored_polygon(blade, Color(0.78, 0.9, 0.96, 1.0))
-	draw_line(Vector2(-8, 0), Vector2(-3, 0), Color(0.22, 0.11, 0.08, 1.0), 2.0, true)
 
 
 func _on_body_entered(body: Node2D) -> void:
