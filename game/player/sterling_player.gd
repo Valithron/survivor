@@ -358,12 +358,25 @@ func _add_configured_visual() -> void:
 	var visual := character_definition.sprite_scene.instantiate()
 	visual.name = &"Visual"
 	add_child(visual)
+	if visual.has_method(&"play_basic_shot"):
+		basic_fired.connect(_on_basic_fired_for_visual.bind(visual))
 
 
 func _sync_visual_animation() -> void:
 	var visual := get_node_or_null(^"Visual")
 	if visual != null and visual.has_method(&"set_animation_state"):
 		visual.call(&"set_animation_state", current_animation_name)
+
+
+func _on_basic_fired_for_visual(
+	_direction: Vector2,
+	_muzzle_position: Vector2,
+	muzzle_side: int,
+	_fire_rate: float,
+	visual: Node,
+) -> void:
+	if is_instance_valid(visual) and visual.has_method(&"play_basic_shot"):
+		visual.call(&"play_basic_shot", muzzle_side)
 
 
 func _on_health_changed(current: float, maximum: float) -> void:

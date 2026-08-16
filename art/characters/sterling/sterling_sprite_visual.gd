@@ -23,6 +23,8 @@ var _direction := "e"
 var _elapsed := 0.0
 var _reaction_action := ""
 var _reaction_remaining := 0.0
+var _forced_basic_frame := -1
+var _forced_basic_remaining := 0.0
 
 
 func _ready() -> void:
@@ -47,6 +49,8 @@ func set_animation_state(animation_name: StringName) -> void:
 func play_hurt() -> void:
 	if _action == "death":
 		return
+	_forced_basic_frame = -1
+	_forced_basic_remaining = 0.0
 	_reaction_action = "hurt"
 	_reaction_remaining = 0.12
 	_apply_frame()
@@ -57,6 +61,18 @@ func play_death() -> void:
 	_elapsed = 0.0
 	_reaction_action = ""
 	_reaction_remaining = 0.0
+	_forced_basic_frame = -1
+	_forced_basic_remaining = 0.0
+	_apply_frame()
+
+
+func play_basic_shot(muzzle_side: int) -> void:
+	## Align the authored alternating recoil cells with the real alternating
+	## muzzle. This remains presentation-only; combat timing stays in SterlingPlayer.
+	if _action == "death":
+		return
+	_forced_basic_frame = 0 if muzzle_side > 0 else 1
+	_forced_basic_remaining = 0.075
 	_apply_frame()
 
 
@@ -64,15 +80,23 @@ func _process(delta: float) -> void:
 	_elapsed += delta
 	if _reaction_remaining > 0.0:
 		_reaction_remaining = maxf(_reaction_remaining - delta, 0.0)
+	if _forced_basic_remaining > 0.0:
+		_forced_basic_remaining = maxf(_forced_basic_remaining - delta, 0.0)
+		if is_zero_approx(_forced_basic_remaining):
+			_forced_basic_frame = -1
 	_apply_frame()
 
 
 func _apply_frame() -> void:
 	var active_action := _reaction_action if _reaction_remaining > 0.0 else _action
+	if _forced_basic_frame >= 0 and _reaction_remaining <= 0.0:
+		active_action = "basic"
 	var layout: Dictionary = ANIMATION_LAYOUT[active_action]
 	var frame_count: int = layout["frames"]
 	var frame_index := 0
-	if frame_count > 1:
+	if active_action == "basic" and _forced_basic_frame >= 0:
+		frame_index = _forced_basic_frame
+	elif frame_count > 1:
 		frame_index = posmod(int(floor(_elapsed * float(layout["fps"]))), frame_count)
 	sprite.region_rect = Rect2(
 		float(DIRECTION_COLUMNS[_direction] * CELL_SIZE),

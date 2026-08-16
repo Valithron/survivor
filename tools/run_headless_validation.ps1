@@ -40,6 +40,7 @@ $validations = @(
 	@{ Name = 'W1 weapon batch one'; Mode = '--scene'; Target = 'res://tests/w1_headless_validation.tscn' },
 	@{ Name = 'W2 weapon batch two'; Mode = '--scene'; Target = 'res://tests/w2_headless_validation.tscn' },
 	@{ Name = 'Prototype art'; Mode = '--scene'; Target = 'res://tests/prototype_art_validation.tscn' },
+	@{ Name = 'Sterling animation preview'; Mode = '--scene'; Target = 'res://tests/sterling_animation_preview_validation.tscn' },
 	@{ Name = 'Prototype combat sandbox'; Mode = '--scene'; Target = 'res://tests/prototype_combat_sandbox_headless_validation.tscn' },
 	@{ Name = 'Prototype integration'; Mode = '--scene'; Target = 'res://tests/prototype_playtest_headless_validation.tscn' },
 	@{ Name = 'R1 run director'; Mode = '--scene'; Target = 'res://tests/r1_headless_validation.tscn' },
