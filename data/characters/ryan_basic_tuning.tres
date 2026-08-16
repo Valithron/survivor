@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="RyanBasicTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/player/ryan_basic_tuning.gd" id="1_tuning"]
+
+[resource]
+script = ExtResource("1_tuning")
+shots_per_second = 1.2
+cone_range = 172.0
+cone_angle_degrees = 48.0
+damage_per_target = 34.0
+knockback_strength = 92.0
+maximum_targets_per_blast = 14
+basic_animation_hold_seconds = 0.14
+level_five_damage_multiplier = 1.3
+level_five_cone_angle_bonus_degrees = 10.0
+level_five_knockback_multiplier = 1.28
+level_five_bonus_targets = 3
+auto_aim_range = 540.0
+target_refresh_seconds = 0.12
+target_switch_distance_ratio = 0.82

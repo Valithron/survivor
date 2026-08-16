@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/data/ability_definition.gd" id="1_ability"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"cooper_anchored_sustained_fire"
+display_name = "Anchored Sustained Fire"
+summary = "Nearly roots Cooper while dramatically increasing rifle fire rate and damage."
+cooldown_seconds = 32.0

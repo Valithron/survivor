@@ -14,6 +14,9 @@ var _target_health: HealthComponent
 var _target_contact_radius: float = 16.0
 var _defeat_reported := false
 var is_elite := false
+var _knockback_velocity := Vector2.ZERO
+
+const KNOCKBACK_DECELERATION := 980.0
 
 
 func _ready() -> void:
@@ -53,7 +56,13 @@ func set_target(target: Node2D, target_health: HealthComponent = null, target_co
 func apply_damage_event(event: DamageEvent) -> float:
 	if health_component == null:
 		return 0.0
-	return health_component.apply_damage(event)
+	var applied_amount := health_component.apply_damage(event)
+	if applied_amount > 0.0 and event != null and event.knockback.length_squared() > 0.0001:
+		## This is the shared, intentionally narrow displacement seam used by
+		## Ryan's locked shotgun/charge/ultimate and existing weapon knockback.
+		## Bosses are intentionally not forced through it.
+		_knockback_velocity += event.knockback
+	return applied_amount
 
 
 func receive_damage(event: DamageEvent) -> float:
@@ -85,18 +94,23 @@ func get_contact_damage_per_second() -> float:
 func _physics_process(delta: float) -> void:
 	if _defeat_reported or definition == null:
 		return
+	_knockback_velocity = _knockback_velocity.move_toward(Vector2.ZERO, KNOCKBACK_DECELERATION * delta)
 	if not is_instance_valid(_target):
-		velocity = Vector2.ZERO
+		velocity = _knockback_velocity
+		if velocity.length_squared() > 0.0001:
+			move_and_slide()
 		return
 
 	var toward_target := _target.global_position - global_position
 	var contact_distance := definition.collision_radius + _target_contact_radius
 	if toward_target.length_squared() > contact_distance * contact_distance:
-		velocity = toward_target.normalized() * get_move_speed()
+		velocity = toward_target.normalized() * get_move_speed() + _knockback_velocity
 		move_and_slide()
 		_set_visual_motion(&"run", toward_target)
 	else:
-		velocity = Vector2.ZERO
+		velocity = _knockback_velocity
+		if velocity.length_squared() > 0.0001:
+			move_and_slide()
 		_set_visual_motion(&"attack", toward_target)
 
 	if has_live_target() and global_position.distance_squared_to(_target.global_position) <= contact_distance * contact_distance:

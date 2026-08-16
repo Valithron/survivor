@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://game/data/character_definition.gd" id="1_character"]
+[ext_resource type="Resource" path="res://data/abilities/cooper_automatic_rifle.tres" id="2_basic"]
+[ext_resource type="Resource" path="res://data/abilities/cooper_damage_overclock.tres" id="3_tactical"]
+[ext_resource type="Resource" path="res://data/abilities/cooper_anchored_sustained_fire.tres" id="4_ultimate"]
+[ext_resource type="Script" path="res://game/data/character_milestones.gd" id="5_milestones"]
+
+[sub_resource type="Resource" id="CharacterMilestones_cooper"]
+script = ExtResource("5_milestones")
+
+[resource]
+script = ExtResource("1_character")
+character_id = &"cooper"
+display_name = "Cooper"
+archetype_summary = "Glass Cannon: extreme sustained rifle damage traded for survivability and commitment."
+base_max_health = 72.0
+move_speed = 238.0
+basic_attack = ExtResource("2_basic")
+tactical = ExtResource("3_tactical")
+ultimate = ExtResource("4_ultimate")
+milestones = SubResource("CharacterMilestones_cooper")

@@ -48,6 +48,8 @@ $validations = @(
 	@{ Name = 'B1 boss'; Mode = '--scene'; Target = 'res://tests/b1_headless_validation.tscn' },
 	@{ Name = 'U1 HUD and run flow'; Mode = '--scene'; Target = 'res://tests/u1_headless_validation.tscn' },
 	@{ Name = 'META-1 unlock progression'; Mode = '--scene'; Target = 'res://tests/meta_headless_validation.tscn' },
+	@{ Name = 'C-RYAN Bruiser kit'; Mode = '--scene'; Target = 'res://tests/c_ryan_headless_validation.tscn' },
+	@{ Name = 'C-COOPER Glass Cannon kit'; Mode = '--scene'; Target = 'res://tests/c_cooper_headless_validation.tscn' },
 	@{ Name = 'Late-run performance snapshot'; Mode = '--scene'; Target = 'res://tests/late_run_performance_snapshot.tscn' }
 )
 

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CooperBasicTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/player/cooper_basic_tuning.gd" id="1_tuning"]
+
+[resource]
+script = ExtResource("1_tuning")
+shots_per_second = 10.5
+projectile_damage = 9.0
+projectile_speed = 860.0
+projectile_lifetime_seconds = 1.15
+projectile_radius = 2.0
+muzzle_offset = 11.0
+basic_animation_hold_seconds = 0.09
+level_five_damage_multiplier = 1.2
+level_five_fire_rate_multiplier = 1.25
+auto_aim_range = 760.0
+target_refresh_seconds = 0.1
+target_switch_distance_ratio = 0.82
