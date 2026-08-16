@@ -85,6 +85,9 @@ func _run_validation() -> void:
 		await get_tree().process_frame
 		if fire_patch_positions.size() != 1:
 			errors.append("Molotov Rank 1 did not create exactly one persistent fire patch.")
+		var fire_patch := _first_node_of_type(world, MolotovFirePatch)
+		if fire_patch == null or _first_sprite(fire_patch) == null:
+			errors.append("Molotov fire patch did not instantiate its raster VFX sprite.")
 		if not _has_damage_tag(target.received_events, &"shared_weapon_molotov"):
 			errors.append("Molotov fire patch did not emit shared DamageEvent ticks.")
 		for rank in range(2, WeaponDefinition.MAX_RANK + 1):
@@ -140,3 +143,14 @@ func _has_damage_tag(events: Array[DamageEvent], tag: StringName) -> bool:
 		if event.tag == tag:
 			return true
 	return false
+
+
+func _first_node_of_type(root: Node, script_type: Variant) -> Node:
+	for child in root.get_children():
+		if is_instance_of(child, script_type):
+			return child
+		var nested := _first_node_of_type(child, script_type)
+		if nested != null:
+			return nested
+	return null
+
