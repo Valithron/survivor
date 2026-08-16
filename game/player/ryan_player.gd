@@ -1,6 +1,8 @@
 class_name RyanPlayer
 extends CharacterBody2D
 
+const IMPACT_EFFECT_SCRIPT := preload("res://game/player/ryan_impact_effect.gd")
+
 ## Ryan's independent Bruiser runtime. It deliberately reuses only the narrow
 ## F0 targeting/damage and animation seams, leaving Sterling's Speedster code
 ## untouched and avoiding character-specific branches in shared systems.
@@ -292,9 +294,20 @@ func _fire_next_radial_impact() -> void:
 		if WeaponTargeting.apply_damage(target, self, damage, &"ryan_final_shockwave" if is_final else &"ryan_radial_impact", impact_direction * knockback):
 			hit_count += 1
 	radial_impact_fired.emit(_impact_index, radius, damage, is_final, hit_count)
+	_spawn_impact_effect(radius, is_final)
 	_impacts_remaining -= 1
 	_impact_index += 1
 	_impact_delay_remaining += kit_tuning.impact_interval_seconds
+
+
+func _spawn_impact_effect(effect_radius: float, final_impact: bool) -> void:
+	var parent := get_parent()
+	if parent == null:
+		return
+	var effect := IMPACT_EFFECT_SCRIPT.new() as RyanImpactEffect
+	parent.add_child(effect)
+	effect.global_position = global_position
+	effect.configure(effect_radius, final_impact)
 
 
 func _resolve_tactical_direction(explicit_direction: Vector2) -> Vector2:

@@ -78,6 +78,16 @@ func _validate() -> void:
 	)
 	if not player.try_activate_ultimate():
 		errors.append("Ryan's escalating radial-impact ultimate did not activate while ready.")
+	await get_tree().process_frame
+	var impact_effect := _first_impact_effect(get_tree().root)
+	if impact_effect == null:
+		errors.append("Ryan ultimate did not create its radial-impact presentation.")
+	else:
+		var impact_sprite := _first_sprite(impact_effect)
+		if impact_sprite == null or impact_sprite.texture == null:
+			errors.append("Ryan radial impact is missing its production raster Sprite2D.")
+		elif impact_sprite.texture.get_size() != Vector2(384.0, 128.0):
+			errors.append("Ryan radial-impact atlas has the wrong raster dimensions.")
 	for _frame in range(132):
 		await get_tree().physics_frame
 	var expected_impacts := KIT_TUNING.impact_count_for(true)
@@ -109,6 +119,20 @@ func _spawn_durable_enemy(player: RyanPlayer, position: Vector2) -> ZombieEnemy:
 	enemy.global_position = position
 	get_tree().root.add_child(enemy)
 	return enemy
+
+
+func _first_impact_effect(parent: Node) -> RyanImpactEffect:
+	for child in parent.get_children():
+		if child is RyanImpactEffect:
+			return child as RyanImpactEffect
+	return null
+
+
+func _first_sprite(parent: Node) -> Sprite2D:
+	for child in parent.get_children():
+		if child is Sprite2D:
+			return child as Sprite2D
+	return null
 
 
 func _finish(errors: Array[String]) -> void:
