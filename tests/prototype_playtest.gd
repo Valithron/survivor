@@ -3,9 +3,9 @@ extends Node2D
 
 signal run_finished(outcome: StringName, elapsed_seconds: float, level: int, total_xp: int)
 
-## The approved Prototype combat scene now also serves as the focused P2
-## Sterling-kit playtest. Full First Playable run content remains separate.
-const STERLING: CharacterDefinition = preload("res://data/characters/sterling.tres")
+## The approved Prototype combat scene now carries all selected roster
+## runtimes through the same run/director/progression seams. It retains its
+## PrototypePlaytest name for backwards-compatible First Playable validation.
 const FIRST_PLAYABLE_PROFILE: RunProfile = preload("res://data/run_profiles/first_playable_12_min.tres")
 const MUTANT_BOSS_SCENE: PackedScene = preload("res://game/boss/mutant_boss.tscn")
 const PROGRESSION_DEFINITION: ProgressionDefinition = preload("res://data/progression/prototype_progression.tres")
@@ -15,10 +15,11 @@ const AUTO_TURRET: WeaponDefinition = preload("res://data/weapons/auto_turret.tr
 const MOLOTOV: WeaponDefinition = preload("res://data/weapons/molotov.tres")
 const CHAIN_LIGHTNING: WeaponDefinition = preload("res://data/weapons/chain_lightning.tres")
 const GRENADE_LAUNCHER: WeaponDefinition = preload("res://data/weapons/grenade_launcher.tres")
+const PLAYER_START_POSITION := Vector2(1280.0, 1320.0)
 
 @onready var world: Node2D = $World
 @onready var arena: ShoppingCenterArena = $World/Arena
-@onready var player: SterlingPlayer = $World/SterlingPlayer
+@onready var player_anchor: Node2D = $World/PlayerAnchor
 @onready var enemy_spawner: EnemySpawner = $World/EnemySpawner
 @onready var fast_spawner: EnemySpawner = $World/FastSpawner
 @onready var tank_spawner: EnemySpawner = $World/TankSpawner
@@ -49,12 +50,17 @@ var _last_event := "Combat online. Clear zombies, collect XP, and choose weapons
 var _xp_awards_seen := 0
 var _run_outcome: StringName
 var _active_boss: MutantBoss
+var player: Node2D
+var player_health: HealthComponent
+var _selected_entry: CharacterRosterEntry
 
 
 func _ready() -> void:
 	## This root and the choice UI must remain interactive during a full gameplay
 	## pause; player, enemies, projectiles, and effects inherit the tree pause.
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	if not _instantiate_selected_player():
+		return
 	inventory.configure_runtime(player, world)
 	progression.configure(PROGRESSION_DEFINITION, [THROWING_KNIVES, KATANA, AUTO_TURRET, MOLOTOV, CHAIN_LIGHTNING, GRENADE_LAUNCHER], inventory)
 	progression.set_pickup_target(player, world)
@@ -62,11 +68,8 @@ func _ready() -> void:
 	progression.upgrade_choices_ready.connect(_on_upgrade_choices_ready)
 	progression.upgrade_selected.connect(_on_upgrade_selected)
 	progression.level_advanced_without_upgrade.connect(_on_level_advanced_without_upgrade)
-	progression.level_changed.connect(player.set_character_level)
-	player.died.connect(_on_player_died)
-	player.tactical_activated.connect(_on_tactical_activated)
-	player.ultimate_activated.connect(_on_ultimate_activated)
-	player.ability_milestone_unlocked.connect(_on_ability_milestone_unlocked)
+	progression.level_changed.connect(_on_player_level_changed)
+	_connect_player_signals()
 	RunController.run_time_elapsed.connect(_on_run_time_elapsed)
 	RunController.run_state_changed.connect(_on_run_state_changed)
 	DevTools.xp_award_requested.connect(_on_dev_xp_award_requested)
@@ -79,17 +82,69 @@ func _ready() -> void:
 	outcome_restart_button.pressed.connect(_restart_run)
 	outcome_select_button.pressed.connect(_return_to_selection)
 
-	arena.configure_pickups(player, player.health_component)
+	arena.configure_pickups(player, player_health)
 	arena.health_pickup_collected.connect(_on_health_pickup_collected)
 	run_director.phase_started.connect(_on_run_phase_started)
 	run_director.boss_arrival_requested.connect(_on_boss_arrival_requested)
-	RunController.begin_run(STERLING, FIRST_PLAYABLE_PROFILE)
-	run_director.start(player, player.health_component, 16.0)
-	player.set_character_level(progression.current_level)
+	RunController.begin_run(_selected_entry.character, FIRST_PLAYABLE_PROFILE)
+	run_director.start(player, player_health, 16.0)
+	_on_player_level_changed(progression.current_level)
 	choice_panel.visible = false
 	pause_panel.visible = false
 	outcome_label.visible = false
 	outcome_actions.visible = false
+
+
+func _instantiate_selected_player() -> bool:
+	_selected_entry = CharacterSelection.get_selected_entry()
+	if _selected_entry == null:
+		CharacterSelection.select_character(&"sterling")
+		_selected_entry = CharacterSelection.get_selected_entry()
+	if _selected_entry == null or _selected_entry.player_scene == null:
+		push_error("PrototypePlaytest requires a valid CharacterSelection roster entry.")
+		return false
+	var instance := _selected_entry.player_scene.instantiate()
+	if not (instance is Node2D):
+		push_error("Selected player scene for %s must instantiate Node2D." % _selected_entry.character.character_id)
+		instance.queue_free()
+		return false
+	player = instance as Node2D
+	player.name = &"Player"
+	player_anchor.add_child(player)
+	## Character basics commonly parent transient projectiles/effects beside the
+	## player. Keep that parent untransformed so a configured global muzzle
+	## position is never applied a second time when a roster player is selected.
+	player.global_position = PLAYER_START_POSITION
+	player_health = player.get_node_or_null(^"HealthComponent") as HealthComponent
+	if player_health == null:
+		push_error("Selected player scene for %s must expose HealthComponent." % _selected_entry.character.character_id)
+		return false
+	var camera := Camera2D.new()
+	camera.name = &"Camera2D"
+	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 7.0
+	camera.limit_left = 0
+	camera.limit_top = 0
+	camera.limit_right = 2560
+	camera.limit_bottom = 2560
+	player.add_child(camera)
+	return true
+
+
+func _connect_player_signals() -> void:
+	if player.has_signal(&"died"):
+		player.connect(&"died", _on_player_died)
+	if player.has_signal(&"tactical_activated"):
+		player.connect(&"tactical_activated", _on_tactical_activated)
+	if player.has_signal(&"ultimate_activated"):
+		player.connect(&"ultimate_activated", _on_ultimate_activated)
+	if player.has_signal(&"ability_milestone_unlocked"):
+		player.connect(&"ability_milestone_unlocked", _on_ability_milestone_unlocked)
+
+
+func _on_player_level_changed(level: int) -> void:
+	if player != null and player.has_method(&"set_character_level"):
+		player.call(&"set_character_level", level)
 
 
 func _exit_tree() -> void:
@@ -155,12 +210,14 @@ func _on_level_advanced_without_upgrade(level: int) -> void:
 	_last_event = "Level %d reached; all equipped weapons are Rank 5, so no illegal card was shown." % level
 
 
-func _on_tactical_activated(_direction: Vector2, _start: Vector2, _end: Vector2, buff_seconds: float) -> void:
-	_last_event = "Reposition Burst: dash complete; pistol cadence buffed for %.1fs." % buff_seconds
+func _on_tactical_activated(_first: Variant = null, _second: Variant = null, _third: Variant = null, _fourth: Variant = null) -> void:
+	var tactical_name := _selected_entry.character.tactical.display_name if _selected_entry != null and _selected_entry.character.tactical != null else "Tactical"
+	_last_event = "%s activated. Commit to the character's combat rhythm." % tactical_name
 
 
-func _on_ultimate_activated(burst_count: int, projectiles_per_burst: int) -> void:
-	_last_event = "Radial Bullet Storm: %d bursts of %d shots while movement stays active." % [burst_count, projectiles_per_burst]
+func _on_ultimate_activated(_first: Variant = null, _second: Variant = null) -> void:
+	var ultimate_name := _selected_entry.character.ultimate.display_name if _selected_entry != null and _selected_entry.character.ultimate != null else "Ultimate"
+	_last_event = "%s activated." % ultimate_name
 
 
 func _on_ability_milestone_unlocked(ability_id: StringName, level: int) -> void:
@@ -184,7 +241,7 @@ func _on_boss_arrival_requested() -> void:
 	world.add_child(_active_boss)
 	var arrival_offset := Vector2(-1.0, 0.28).normalized() * 510.0
 	_active_boss.global_position = arena.clamp_to_playable_area(player.global_position + arrival_offset)
-	_active_boss.set_target(player, player.health_component, 16.0)
+	_active_boss.set_target(player, player_health, 16.0)
 	_active_boss.health_changed.connect(_on_boss_health_changed)
 	_active_boss.defeated.connect(_on_boss_defeated)
 	_active_boss.attack_telegraph_started.connect(_on_boss_telegraph_started)
@@ -243,7 +300,8 @@ func _return_to_selection() -> void:
 
 func _on_player_died(_event: DamageEvent) -> void:
 	if _run_outcome.is_empty():
-		_finish_run(&"death", "STERLING DOWN // First Playable run ended.")
+		var name := _selected_entry.character.display_name.to_upper() if _selected_entry != null else "SURVIVOR"
+		_finish_run(&"death", "%s DOWN // First Playable run ended." % name)
 
 
 func _on_run_time_elapsed(_profile: RunProfile) -> void:

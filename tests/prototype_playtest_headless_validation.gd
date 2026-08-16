@@ -14,7 +14,7 @@ func _validate_playtest() -> void:
 	get_tree().root.add_child(playtest)
 	await get_tree().process_frame
 
-	var player := playtest.get_node(^"World/SterlingPlayer") as SterlingPlayer
+	var player := playtest.get_node(^"World/PlayerAnchor/Player") as SterlingPlayer
 	var progression := playtest.get_node(^"World/ProgressionController") as ProgressionController
 	var inventory := playtest.get_node(^"World/WeaponInventory") as WeaponInventory
 	var spawner := playtest.get_node(^"World/EnemySpawner") as EnemySpawner

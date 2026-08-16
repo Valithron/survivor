@@ -14,7 +14,7 @@ func _validate() -> void:
 	var playtest := PLAYTEST_SCENE.instantiate() as PrototypePlaytest
 	get_tree().root.add_child(playtest)
 	await get_tree().process_frame
-	var player := playtest.get_node_or_null(^"World/SterlingPlayer") as SterlingPlayer
+	var player := playtest.get_node_or_null(^"World/PlayerAnchor/Player") as SterlingPlayer
 	var core_hud := playtest.get_node_or_null(^"CanvasLayer/CoreHud") as CoreHud
 	var number_layer := playtest.get_node_or_null(^"World/DamageNumbers") as DamageNumberLayer
 	var pause_panel := playtest.get_node_or_null(^"CanvasLayer/PausePanel") as ColorRect

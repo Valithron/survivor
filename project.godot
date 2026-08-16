@@ -20,6 +20,7 @@ GameplayEvents="*res://game/core/gameplay_events.gd"
 RunController="*res://game/run/run_controller.gd"
 DevTools="*res://dev/dev_test_hooks.gd"
 MetaProgression="*res://game/meta/meta_progression.gd"
+CharacterSelection="*res://game/run/character_selection.gd"
 
 [display]
 

@@ -120,18 +120,18 @@ grow_vertical = 2
 [node name="Panel" type="ColorRect" parent="CharacterSelect"]
 layout_mode = 0
 offset_left = 314.0
-offset_top = 126.0
+offset_top = 82.0
 offset_right = 966.0
-offset_bottom = 592.0
+offset_bottom = 650.0
 color = Color(0.016, 0.045, 0.085, 0.96)
 mouse_filter = 2
 
 [node name="Title" type="Label" parent="CharacterSelect"]
 layout_mode = 0
 offset_left = 370.0
-offset_top = 170.0
+offset_top = 118.0
 offset_right = 910.0
-offset_bottom = 218.0
+offset_bottom = 166.0
 theme_override_colors/font_color = Color(1, 0.82, 0.37, 1)
 theme_override_font_sizes/font_size = 31
 horizontal_alignment = 1
@@ -140,19 +140,39 @@ text = "CHOOSE SURVIVOR"
 [node name="SterlingButton" type="Button" parent="CharacterSelect"]
 layout_mode = 0
 offset_left = 410.0
-offset_top = 244.0
+offset_top = 190.0
 offset_right = 870.0
-offset_bottom = 372.0
+offset_bottom = 260.0
 theme_override_colors/font_color = Color(0.82, 0.94, 1, 1)
 theme_override_font_sizes/font_size = 22
 text = "STERLING  //  SPEEDSTER\nDual pistols • movement-driven fire rate • Reposition Burst"
 
+[node name="RyanButton" type="Button" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 272.0
+offset_right = 870.0
+offset_bottom = 342.0
+theme_override_colors/font_color = Color(1, 0.79, 0.56, 1)
+theme_override_font_sizes/font_size = 18
+text = "RYAN  //  BRUISER\nCombat shotgun - Armored Charge - escalating shockwave"
+
+[node name="CooperButton" type="Button" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 354.0
+offset_right = 870.0
+offset_bottom = 424.0
+theme_override_colors/font_color = Color(0.94, 0.68, 0.98, 1)
+theme_override_font_sizes/font_size = 18
+text = "COOPER  //  GLASS CANNON\nAutomatic rifle - Damage Overclock - Anchored Fire"
+
 [node name="UnlockStatus" type="Label" parent="CharacterSelect"]
 layout_mode = 0
 offset_left = 390.0
-offset_top = 398.0
+offset_top = 444.0
 offset_right = 890.0
-offset_bottom = 468.0
+offset_bottom = 514.0
 theme_override_colors/font_color = Color(0.58, 0.74, 0.82, 1)
 theme_override_font_sizes/font_size = 14
 horizontal_alignment = 1
@@ -161,8 +181,8 @@ text = "STERLING // AVAILABLE\nRYAN // LOCKED - 1 natural run remaining\nCOOPER 
 [node name="BackButton" type="Button" parent="CharacterSelect"]
 layout_mode = 0
 offset_left = 520.0
-offset_top = 482.0
+offset_top = 548.0
 offset_right = 760.0
-offset_bottom = 538.0
+offset_bottom = 604.0
 theme_override_font_sizes/font_size = 17
 text = "BACK"

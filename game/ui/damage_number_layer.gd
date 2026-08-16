@@ -24,6 +24,6 @@ func _on_damage_applied(target: Node, event: DamageEvent, applied_amount: float)
 	var number := DAMAGE_NUMBER_SCRIPT.new() as DamageNumber
 	add_child(number)
 	var color := Color(1.0, 0.83, 0.34, 1.0)
-	if target is SterlingPlayer:
+	if target.has_method(&"try_activate_tactical") and not target.is_in_group(WeaponTargeting.ENEMY_TARGET_GROUP):
 		color = Color(1.0, 0.42, 0.40, 1.0)
 	number.configure((target as Node2D).global_position + Vector2(0.0, -36.0), applied_amount, color)

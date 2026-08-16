@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="Script" path="res://tests/prototype_playtest.gd" id="1_playtest"]
-[ext_resource type="PackedScene" path="res://game/player/sterling_player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://game/enemies/enemy_spawner.gd" id="3_spawner"]
 [ext_resource type="Resource" path="res://data/enemies/swarm_spawn_config.tres" id="4_spawn_config"]
 [ext_resource type="PackedScene" path="res://game/enemies/swarm_zombie.tscn" id="5_enemy"]
@@ -32,16 +31,7 @@ process_mode = 1
 
 [node name="Arena" parent="World" instance=ExtResource("15_arena")]
 
-[node name="SterlingPlayer" parent="World" instance=ExtResource("2_player")]
-position = Vector2(1280, 1320)
-
-[node name="Camera2D" type="Camera2D" parent="World/SterlingPlayer"]
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-limit_left = 0
-limit_top = 0
-limit_right = 2560
-limit_bottom = 2560
+[node name="PlayerAnchor" type="Node2D" parent="World"]
 
 [node name="DamageNumbers" type="Node2D" parent="World"]
 script = ExtResource("16_damage_numbers")
