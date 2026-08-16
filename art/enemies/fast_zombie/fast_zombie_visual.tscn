@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://art/enemies/swarm_zombie/swarm_zombie_sprite_visual.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://art/enemies/fast_zombie/fast_zombie_sheet.png" id="2_sheet"]
+
+[node name="FastZombieVisual" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_sheet")
+position = Vector2(0, -30)
+region_enabled = true
+region_rect = Rect2(256, 0, 64, 64)

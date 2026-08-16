@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://game/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://game/data/weapon_rank_definition.gd" id="2_rank"]
+[ext_resource type="PackedScene" path="res://game/weapons/molotov_runtime.tscn" id="3_runtime"]
+
+[sub_resource type="Resource" id="WeaponRank_molotov_1"]
+script = ExtResource("2_rank")
+rank = 1
+summary = "Acquire Molotov: automatically tosses persistent fire."
+tuning = {"cooldown": 2.10, "damage_per_tick": 8.0, "duration": 3.0, "flight_duration": 0.20, "impact_damage": 0.0, "patch_count": 1, "radius": 52.0, "tick_interval": 0.50, "toss_range": 290.0}
+
+[sub_resource type="Resource" id="WeaponRank_molotov_2"]
+script = ExtResource("2_rank")
+rank = 2
+summary = "Bigger, longer-burning fire patch."
+tuning = {"cooldown": 1.90, "damage_per_tick": 10.0, "duration": 3.6, "flight_duration": 0.20, "impact_damage": 0.0, "patch_count": 1, "radius": 60.0, "tick_interval": 0.50, "toss_range": 310.0}
+
+[sub_resource type="Resource" id="WeaponRank_molotov_3"]
+script = ExtResource("2_rank")
+rank = 3
+summary = "Faster-burning area denial."
+tuning = {"cooldown": 1.70, "damage_per_tick": 11.0, "duration": 4.2, "flight_duration": 0.18, "impact_damage": 0.0, "patch_count": 1, "radius": 66.0, "tick_interval": 0.38, "toss_range": 330.0}
+
+[sub_resource type="Resource" id="WeaponRank_molotov_4"]
+script = ExtResource("2_rank")
+rank = 4
+summary = "Two overlapping fire zones pressure a wider route."
+tuning = {"cooldown": 1.50, "damage_per_tick": 13.0, "duration": 4.8, "flight_duration": 0.18, "impact_damage": 0.0, "patch_count": 2, "radius": 70.0, "tick_interval": 0.38, "toss_range": 350.0}
+
+[sub_resource type="Resource" id="WeaponRank_molotov_5"]
+script = ExtResource("2_rank")
+rank = 5
+summary = "Capstone: inferno impact that leaves three large fire zones."
+tuning = {"cooldown": 1.25, "damage_per_tick": 17.0, "duration": 5.8, "flight_duration": 0.16, "impact_damage": 24.0, "patch_count": 3, "radius": 82.0, "tick_interval": 0.32, "toss_range": 375.0}
+
+[resource]
+script = ExtResource("1_weapon")
+weapon_id = &"molotov"
+display_name = "Molotov"
+summary = "Persistent ground fire shared weapon."
+targeting_mode = 3
+runtime_scene = ExtResource("3_runtime")
+ranks = Array[ExtResource("2_rank")]([SubResource("WeaponRank_molotov_1"), SubResource("WeaponRank_molotov_2"), SubResource("WeaponRank_molotov_3"), SubResource("WeaponRank_molotov_4"), SubResource("WeaponRank_molotov_5")])

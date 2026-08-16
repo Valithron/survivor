@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ArenaDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/arena/arena_definition.gd" id="1_arena"]
+
+[resource]
+script = ExtResource("1_arena")
+arena_id = &"abandoned_shopping_center"
+display_name = "Abandoned Shopping Center"
+arena_size = Vector2(2560, 2560)
+player_start_position = Vector2(1280, 1320)
+boundary_inset = 96.0
+health_pickup_positions = PackedVector2Array(690, 780, 1840, 700, 580, 1830, 1970, 1860)
+health_pickup_heal_amount = 36.0
+health_pickup_respawn_seconds = 48.0
+health_pickup_collect_radius = 42.0
+guaranteed_pickup_distance = 220.0
+

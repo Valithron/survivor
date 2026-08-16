@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/enemy_definition.gd" id="1_enemy"]
+[ext_resource type="PackedScene" path="res://art/enemies/tank_zombie/tank_zombie_visual.tscn" id="2_visual"]
+
+[resource]
+script = ExtResource("1_enemy")
+enemy_id = &"tank_zombie"
+display_name = "Tank Zombie"
+base_max_health = 52.0
+move_speed = 44.0
+contact_damage_per_second = 11.0
+collision_radius = 24.0
+xp_value = 5
+visual_scene = ExtResource("2_visual")
+elite_health_multiplier = 2.4
+elite_damage_multiplier = 1.55
+elite_speed_multiplier = 1.06

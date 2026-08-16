@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=8 format=3]
+[ext_resource type="Script" path="res://game/data/weapon_definition.gd" id="1"]
+[ext_resource type="Script" path="res://game/data/weapon_rank_definition.gd" id="2"]
+[ext_resource type="PackedScene" path="res://game/weapons/chain_lightning_runtime.tscn" id="3"]
+[sub_resource type="Resource" id="R1"]
+script = ExtResource("2")
+rank = 1
+summary = "Acquire Chain Lightning: a quick two-target arc."
+tuning = {"chain_count": 2, "chain_volley_count": 1, "cooldown": 1.15, "damage": 20.0, "damage_decay": 0.82, "jump_range": 135.0, "range": 430.0}
+[sub_resource type="Resource" id="R2"]
+script = ExtResource("2")
+rank = 2
+summary = "Chain Lightning reaches a third clustered target."
+tuning = {"chain_count": 3, "chain_volley_count": 1, "cooldown": 1.02, "damage": 24.0, "damage_decay": 0.84, "jump_range": 148.0, "range": 450.0}
+[sub_resource type="Resource" id="R3"]
+script = ExtResource("2")
+rank = 3
+summary = "Longer arcs hit four enemies with less falloff."
+tuning = {"chain_count": 4, "chain_volley_count": 1, "cooldown": 0.90, "damage": 29.0, "damage_decay": 0.87, "jump_range": 164.0, "range": 475.0}
+[sub_resource type="Resource" id="R4"]
+script = ExtResource("2")
+rank = 4
+summary = "Chain Lightning tears through five enemies at high cadence."
+tuning = {"chain_count": 5, "chain_volley_count": 1, "cooldown": 0.76, "damage": 35.0, "damage_decay": 0.89, "jump_range": 182.0, "range": 500.0}
+[sub_resource type="Resource" id="R5"]
+script = ExtResource("2")
+rank = 5
+summary = "Capstone: two forked seven-target arcs overload dense hordes."
+tuning = {"chain_count": 7, "chain_volley_count": 2, "cooldown": 0.56, "damage": 48.0, "damage_decay": 0.92, "jump_range": 210.0, "range": 540.0}
+[resource]
+script = ExtResource("1")
+weapon_id = &"chain_lightning"
+display_name = "Chain Lightning"
+summary = "Automatic arcs that jump through clustered zombies."
+targeting_mode = 0
+runtime_scene = ExtResource("3")
+ranks = Array[ExtResource("2")]([SubResource("R1"), SubResource("R2"), SubResource("R3"), SubResource("R4"), SubResource("R5")])

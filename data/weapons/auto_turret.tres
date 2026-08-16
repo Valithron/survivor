@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://game/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://game/data/weapon_rank_definition.gd" id="2_rank"]
+[ext_resource type="PackedScene" path="res://game/weapons/auto_turret_runtime.tscn" id="3_runtime"]
+
+[sub_resource type="Resource" id="Rank1"]
+script = ExtResource("2_rank")
+rank = 1
+summary = "Acquire Auto-Turret: deploys one autonomous sentry."
+tuning = {"capacity": 1, "damage": 12.0, "deploy_cooldown": 1.1, "deploy_radius": 46.0, "fire_cooldown": 0.65, "lifetime": 8.0, "pierce_count": 1, "projectile_lifetime": 0.75, "projectile_radius": 3.0, "projectile_speed": 620.0, "range": 330.0, "shots_per_cycle": 1, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank2"]
+script = ExtResource("2_rank")
+rank = 2
+summary = "Turret fires farther and hits harder."
+tuning = {"capacity": 1, "damage": 16.0, "deploy_cooldown": 1.0, "deploy_radius": 48.0, "fire_cooldown": 0.56, "lifetime": 9.0, "pierce_count": 1, "projectile_lifetime": 0.82, "projectile_radius": 3.0, "projectile_speed": 680.0, "range": 370.0, "shots_per_cycle": 1, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank3"]
+script = ExtResource("2_rank")
+rank = 3
+summary = "A second turret can hold another lane."
+tuning = {"capacity": 2, "damage": 19.0, "deploy_cooldown": 0.9, "deploy_radius": 54.0, "fire_cooldown": 0.50, "lifetime": 10.0, "pierce_count": 1, "projectile_lifetime": 0.86, "projectile_radius": 3.0, "projectile_speed": 720.0, "range": 400.0, "shots_per_cycle": 1, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank4"]
+script = ExtResource("2_rank")
+rank = 4
+summary = "Turrets cycle quickly and pierce a second target."
+tuning = {"capacity": 2, "damage": 23.0, "deploy_cooldown": 0.78, "deploy_radius": 58.0, "fire_cooldown": 0.38, "lifetime": 11.0, "pierce_count": 2, "projectile_lifetime": 0.92, "projectile_radius": 3.0, "projectile_speed": 780.0, "range": 440.0, "shots_per_cycle": 1, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank5"]
+script = ExtResource("2_rank")
+rank = 5
+summary = "Capstone: three overclocked turrets fire twin spread volleys."
+tuning = {"capacity": 3, "damage": 31.0, "deploy_cooldown": 0.58, "deploy_radius": 64.0, "fire_cooldown": 0.27, "lifetime": 13.0, "pierce_count": 2, "projectile_lifetime": 1.0, "projectile_radius": 4.0, "projectile_speed": 860.0, "range": 490.0, "shots_per_cycle": 2, "spread_degrees": 10.0}
+
+[resource]
+script = ExtResource("1_weapon")
+weapon_id = &"auto_turret"
+display_name = "Auto-Turret"
+summary = "Deployable autonomous sentries."
+targeting_mode = 0
+runtime_scene = ExtResource("3_runtime")
+ranks = Array[ExtResource("2_rank")]([SubResource("Rank1"), SubResource("Rank2"), SubResource("Rank3"), SubResource("Rank4"), SubResource("Rank5")])

@@ -195,10 +195,11 @@ Run structure:
 
 Boss:
 
-- huge mutated zombie
+- huge, asymmetrical multi-mutated humanoid zombie horror with one grotesquely oversized arm and smaller torso growths
 - slow
 - durable
-- several readable telegraphed area attacks
+- exactly three readable telegraphed attacks: Ground Slam (circular shockwave), Sweeping Mutated-Arm Smash (wide frontal arc), and Mutant Charge (long straight rush)
+- no boss phases, summons, ranged/vomit attacks, or additional major mechanics without an explicit decision
 - normal late-game zombies continue spawning at full intensity during boss
 - guaranteed health pickup appears nearby at boss arrival
 
@@ -477,17 +478,18 @@ Then balance all six as a pool.
 
 ## M1 - Arena / Healing
 
-- large scrolling arena
-- simple obstacles/props
-- fixed respawning health pickups
-- readable landmarks
-
-Exact environment theme is still OPEN and should be approved before final arena art commits to a strong setting.
+- one large scrolling **abandoned-shopping-center** arena centered on a broad open parking lot
+- deserted storefront edges establish the outer identity
+- scattered abandoned cars, carts/cart-related obstacles, and simple props shape movement without maze-like navigation
+- low-to-moderate environment detail; Sterling and horde readability remains dominant
+- fixed respawning health pickups at visually recognizable landmark locations
+- public arena contract for bounds, pickup placement, respawn timing, healing amount, and nearby guaranteed boss-arrival pickup
 
 ## B1 - Boss
 
-- huge mutant boss runtime
-- telegraphed area attacks
+- huge asymmetrical multi-mutated humanoid zombie runtime, with an oversized mutated arm and smaller torso growths
+- exactly three attacks: Ground Slam (circular telegraph + shockwave), Sweeping Mutated-Arm Smash (frontal arc), Mutant Charge (long straight-line rush)
+- attack windups/danger zones must remain distinct under late-game horde and weapon pressure
 - boss health bar contract
 - horde continues during fight
 - guaranteed nearby health pickup at spawn

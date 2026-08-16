@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RunProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/data/run_profile.gd" id="1_profile"]
+
+[resource]
+script = ExtResource("1_profile")
+profile_id = &"prototype_5_min"
+display_name = "Prototype 5 Minute Test"
+survival_duration_seconds = 300.0

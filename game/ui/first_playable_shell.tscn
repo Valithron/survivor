@@ -1,0 +1,168 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/ui/first_playable_shell.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://art/arena/shopping_center/parking_lot_2560.png" id="2_background"]
+
+[node name="FirstPlayableShell" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_filter = 1
+modulate = Color(0.35, 0.45, 0.62, 1)
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+mouse_filter = 2
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.027, 0.052, 0.72)
+mouse_filter = 2
+
+[node name="TitlePanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="ColorRect" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 158.0
+offset_right = 966.0
+offset_bottom = 550.0
+color = Color(0.016, 0.045, 0.085, 0.95)
+mouse_filter = 2
+
+[node name="Kicker" type="Label" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 210.0
+offset_right = 910.0
+offset_bottom = 242.0
+theme_override_colors/font_color = Color(0.45, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+text = "COMMUNE HORROR-SURVIVAL"
+
+[node name="Title" type="Label" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 250.0
+offset_right = 930.0
+offset_bottom = 325.0
+theme_override_colors/font_color = Color(1, 0.82, 0.37, 1)
+theme_override_colors/font_outline_color = Color(0.01, 0.02, 0.05, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 58
+horizontal_alignment = 1
+text = "SURVIVOR"
+
+[node name="Subtitle" type="Label" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 342.0
+offset_right = 910.0
+offset_bottom = 380.0
+theme_override_colors/font_color = Color(0.86, 0.93, 0.98, 1)
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+text = "A 12-minute horde run through the abandoned shopping center"
+
+[node name="StartButton" type="Button" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 424.0
+offset_right = 818.0
+offset_bottom = 488.0
+theme_override_colors/font_color = Color(1, 0.84, 0.43, 1)
+theme_override_font_sizes/font_size = 22
+text = "START STERLING RUN"
+
+[node name="Hint" type="Label" parent="TitlePanel"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 510.0
+offset_right = 910.0
+offset_bottom = 535.0
+theme_override_colors/font_color = Color(0.55, 0.72, 0.81, 1)
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+text = "Keyboard + mouse // Windows-first"
+
+[node name="CharacterSelect" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="ColorRect" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 126.0
+offset_right = 966.0
+offset_bottom = 592.0
+color = Color(0.016, 0.045, 0.085, 0.96)
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 170.0
+offset_right = 910.0
+offset_bottom = 218.0
+theme_override_colors/font_color = Color(1, 0.82, 0.37, 1)
+theme_override_font_sizes/font_size = 31
+horizontal_alignment = 1
+text = "CHOOSE SURVIVOR"
+
+[node name="SterlingButton" type="Button" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 244.0
+offset_right = 870.0
+offset_bottom = 372.0
+theme_override_colors/font_color = Color(0.82, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "STERLING  //  SPEEDSTER\nDual pistols • movement-driven fire rate • Reposition Burst"
+
+[node name="Availability" type="Label" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 380.0
+offset_top = 402.0
+offset_right = 900.0
+offset_bottom = 437.0
+theme_override_colors/font_color = Color(0.58, 0.74, 0.82, 1)
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+text = "Sterling is the First Playable survivor. Additional characters remain outside this gate."
+
+[node name="BackButton" type="Button" parent="CharacterSelect"]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 482.0
+offset_right = 760.0
+offset_bottom = 538.0
+theme_override_font_sizes/font_size = 17
+text = "BACK"

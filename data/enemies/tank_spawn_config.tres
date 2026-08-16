@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemySpawnConfiguration" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/enemy_spawn_configuration.gd" id="1_config"]
+[ext_resource type="Resource" path="res://data/enemies/tank_zombie.tres" id="2_enemy"]
+
+[resource]
+script = ExtResource("1_config")
+enemy_definition = ExtResource("2_enemy")
+initial_delay_seconds = 0.0
+spawn_interval_seconds = 1.4
+enemies_per_batch = 1
+maximum_active_enemies = 80
+minimum_spawn_distance = 500.0
+maximum_spawn_distance = 720.0
+elite_spawn_chance = 0.025

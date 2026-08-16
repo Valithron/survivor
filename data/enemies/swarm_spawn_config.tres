@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemySpawnConfiguration" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/enemy_spawn_configuration.gd" id="1_config"]
+[ext_resource type="Resource" path="res://data/enemies/swarm_zombie.tres" id="2_enemy"]
+
+[resource]
+script = ExtResource("1_config")
+enemy_definition = ExtResource("2_enemy")
+initial_delay_seconds = 0.5
+spawn_interval_seconds = 0.4
+enemies_per_batch = 3
+maximum_active_enemies = 240
+minimum_spawn_distance = 460.0
+maximum_spawn_distance = 700.0

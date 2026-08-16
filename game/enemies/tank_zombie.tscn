@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://game/enemies/swarm_zombie.gd" id="1_zombie"]
+[ext_resource type="Script" path="res://game/core/health_component.gd" id="2_health"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tank"]
+radius = 24.0
+
+[node name="TankZombie" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_zombie")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tank")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")

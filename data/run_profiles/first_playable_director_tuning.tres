@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RunDirectorTuning" load_steps=2 format=3]
+[ext_resource type="Script" path="res://game/run/run_director_tuning.gd" id="1"]
+[resource]
+script = ExtResource("1")
+baseline_swarm_intensity = 1.0
+baseline_fast_intensity = 0.0
+baseline_tank_intensity = 0.0
+swarm_surge_swarm_intensity = 1.75
+fast_surge_swarm_intensity = 0.85
+fast_surge_fast_intensity = 1.45
+tank_surge_swarm_intensity = 0.75
+tank_surge_fast_intensity = 0.8
+tank_surge_tank_intensity = 1.15
+combined_swarm_intensity = 1.25
+combined_fast_intensity = 1.25
+combined_tank_intensity = 1.25

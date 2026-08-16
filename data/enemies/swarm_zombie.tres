@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/enemy_definition.gd" id="1_enemy"]
+[ext_resource type="PackedScene" path="res://art/enemies/swarm_zombie/swarm_zombie_visual.tscn" id="2_visual"]
+
+[resource]
+script = ExtResource("1_enemy")
+enemy_id = &"swarm_zombie"
+display_name = "Swarm Zombie"
+base_max_health = 10.0
+move_speed = 80.0
+contact_damage_per_second = 5.0
+collision_radius = 16.0
+xp_value = 1
+visual_scene = ExtResource("2_visual")
+elite_health_multiplier = 2.0
+elite_damage_multiplier = 1.5

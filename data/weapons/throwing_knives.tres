@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://game/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://game/data/weapon_rank_definition.gd" id="2_rank"]
+[ext_resource type="PackedScene" path="res://game/weapons/throwing_knives_runtime.tscn" id="3_runtime"]
+
+[sub_resource type="Resource" id="Rank1"]
+script = ExtResource("2_rank")
+rank = 1
+summary = "Acquire Throwing Knives: rapid, narrow automatic volleys."
+tuning = {"cooldown": 0.78, "damage": 14.0, "lifetime": 0.85, "pierce_count": 1, "projectile_count": 1, "radius": 3.0, "range": 440.0, "speed": 760.0, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank2"]
+script = ExtResource("2_rank")
+rank = 2
+summary = "Faster, harder Throwing Knives."
+tuning = {"cooldown": 0.64, "damage": 18.0, "lifetime": 0.90, "pierce_count": 1, "projectile_count": 1, "radius": 3.0, "range": 480.0, "speed": 820.0, "spread_degrees": 0.0}
+
+[sub_resource type="Resource" id="Rank3"]
+script = ExtResource("2_rank")
+rank = 3
+summary = "Twin knives create a narrow forward line."
+tuning = {"cooldown": 0.58, "damage": 21.0, "lifetime": 0.95, "pierce_count": 1, "projectile_count": 2, "radius": 3.0, "range": 510.0, "speed": 860.0, "spread_degrees": 8.0}
+
+[sub_resource type="Resource" id="Rank4"]
+script = ExtResource("2_rank")
+rank = 4
+summary = "Three knives pierce a deeper line through the horde."
+tuning = {"cooldown": 0.48, "damage": 25.0, "lifetime": 1.00, "pierce_count": 2, "projectile_count": 3, "radius": 3.0, "range": 560.0, "speed": 900.0, "spread_degrees": 14.0}
+
+[sub_resource type="Resource" id="Rank5"]
+script = ExtResource("2_rank")
+rank = 5
+summary = "Capstone: a five-knife piercing fan locks down a firing line."
+tuning = {"cooldown": 0.34, "damage": 34.0, "lifetime": 1.10, "pierce_count": 3, "projectile_count": 5, "radius": 4.0, "range": 620.0, "speed": 980.0, "spread_degrees": 28.0}
+
+[resource]
+script = ExtResource("1_weapon")
+weapon_id = &"throwing_knives"
+display_name = "Throwing Knives"
+summary = "Fast directional projectile volleys."
+targeting_mode = 1
+runtime_scene = ExtResource("3_runtime")
+ranks = Array[ExtResource("2_rank")]([SubResource("Rank1"), SubResource("Rank2"), SubResource("Rank3"), SubResource("Rank4"), SubResource("Rank5")])
