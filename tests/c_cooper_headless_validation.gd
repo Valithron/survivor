@@ -38,6 +38,16 @@ func _validate() -> void:
 	player.set_manual_aim_direction(Vector2.RIGHT)
 	var health_before_basic := target.health_component.current_health if target != null else 0.0
 	player.fire_basic_once_for_test()
+	await get_tree().process_frame
+	var rifle_projectile := _first_rifle_projectile(get_tree().root)
+	if rifle_projectile == null:
+		errors.append("Cooper basic did not create its rifle projectile presentation.")
+	else:
+		var tracer_sprite := _first_sprite(rifle_projectile)
+		if tracer_sprite == null or tracer_sprite.texture == null:
+			errors.append("Cooper rifle projectile is missing its production raster tracer.")
+		elif tracer_sprite.texture.get_size() != Vector2(128.0, 64.0):
+			errors.append("Cooper rifle tracer atlas has the wrong raster dimensions.")
 	for _frame in range(24):
 		await get_tree().physics_frame
 	if target == null or target.health_component.current_health >= health_before_basic:
@@ -98,6 +108,20 @@ func _spawn_durable_enemy(player: CooperPlayer, position: Vector2) -> ZombieEnem
 	enemy.global_position = position
 	get_tree().root.add_child(enemy)
 	return enemy
+
+
+func _first_rifle_projectile(parent: Node) -> CooperRifleProjectile:
+	for child in parent.get_children():
+		if child is CooperRifleProjectile:
+			return child as CooperRifleProjectile
+	return null
+
+
+func _first_sprite(parent: Node) -> Sprite2D:
+	for child in parent.get_children():
+		if child is Sprite2D:
+			return child as Sprite2D
+	return null
 
 
 func _finish(errors: Array[String]) -> void:

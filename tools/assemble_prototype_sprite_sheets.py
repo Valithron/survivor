@@ -537,19 +537,81 @@ def _paste_sheet(rows: list[list[Image.Image]], destination: Path) -> None:
     sheet.save(destination)
 
 
+def _safe_whole_pose_offset(frame: Image.Image, frame_index: int) -> Image.Image:
+    """Produce a clean, grounded contact-step from an intact source silhouette.
+
+    The old animation pass reposed broad rectangular masks from a flattened source
+    atlas. Those masks crossed coat, pistol, and neighboring silhouette areas in
+    several facings, which left duplicate bodies and fragments after compositing.
+    This corrective path keeps each source cell whole, then gives the coat/hair a
+    tiny authored shade-step so its six contact phases are never duplicate rasters.
+    """
+    contact_travel = (0, 1, 0, -1, 0, 1)[frame_index]
+    output = _offset(frame, contact_travel, 0)
+    pixels = output.load()
+    candidates: list[tuple[int, int]] = []
+    for y in range(24, CELL - 5):
+        for x in range(CELL):
+            red, green, blue, alpha = pixels[x, y]
+            if alpha > 220 and blue >= red and blue >= green and blue > 45:
+                candidates.append((x, y))
+    # Recolour existing opaque cobalt/hair-edge pixels only.  This reads as a
+    # controlled secondary cloth/hair phase rather than a detached effect or a
+    # second source silhouette, while keeping the feet/pivot unchanged.
+    if candidates:
+        phase = (frame_index * 7) % len(candidates)
+        for x, y in candidates[phase:phase + 4]:
+            red, green, blue, alpha = pixels[x, y]
+            pixels[x, y] = (min(255, red + 6), min(255, green + 8), min(255, blue + 12), alpha)
+    return output
+
+
+def _safe_basic_pose(frame: Image.Image, direction: str, frame_index: int) -> Image.Image:
+    """One coherent recoil pose with only a deliberate tiny muzzle flash."""
+    output = _offset(frame, -1 - frame_index, 0)
+    return _stamp_muzzle_flash(output, direction, frame_index == 1)
+
+
+def _safe_hurt_pose(frame: Image.Image, direction: str) -> Image.Image:
+    """Keep the full silhouette intact while adding a compact hit response."""
+    heading_x, _heading_y = _heading(direction)
+    recoil_x = -heading_x if heading_x != 0 else (-1 if direction == "n" else 1)
+    output = _offset(frame, recoil_x, 0)
+    red = Image.new("RGBA", output.size, (230, 92, 84, 0))
+    alpha = output.getchannel("A").point(lambda value: 64 if value else 0)
+    red.putalpha(alpha)
+    return Image.alpha_composite(output, red)
+
+
+def _safe_death_pose(frame: Image.Image, direction: str, frame_index: int) -> Image.Image:
+    """Four whole-pose fall stages; no cut-and-reassembled body regions."""
+    if frame_index == 0:
+        return _safe_hurt_pose(frame, direction)
+    fall_sign = 1 if direction in {"n", "ne", "e", "se"} else -1
+    angle = (8, 22, 58)[frame_index - 1] * fall_sign
+    output = frame.rotate(
+        angle,
+        resample=Image.Resampling.NEAREST,
+        center=(CELL // 2, CELL - 17),
+        expand=False,
+    )
+    return _offset(output, fall_sign * frame_index, min(frame_index * 2, 6))
+
+
 def _player_rows(directed: dict[str, Image.Image]) -> list[list[Image.Image]]:
+    """Assemble a corruption-safe player sheet from one complete pose per cell."""
     rows: list[list[Image.Image]] = []
 
     # idle_0..2, run_0..5, basic_0..1, hurt, death_0..3
     for frame_index in range(3):
-        rows.append([_idle_pose(directed[direction], direction, frame_index) for direction in DIRECTIONS])
+        rows.append([_offset(directed[direction], (0, 1, 0)[frame_index], 0) for direction in DIRECTIONS])
     for frame_index in range(6):
-        rows.append([_run_pose(directed[direction], direction, frame_index) for direction in DIRECTIONS])
+        rows.append([_safe_whole_pose_offset(directed[direction], frame_index) for direction in DIRECTIONS])
     for frame_index in range(2):
-        rows.append([_basic_pose(directed[direction], direction, frame_index) for direction in DIRECTIONS])
-    rows.append([_hurt_pose(directed[direction], direction) for direction in DIRECTIONS])
+        rows.append([_safe_basic_pose(directed[direction], direction, frame_index) for direction in DIRECTIONS])
+    rows.append([_safe_hurt_pose(directed[direction], direction) for direction in DIRECTIONS])
     for death_index in range(4):
-        rows.append([_death_pose(directed[direction], direction, death_index) for direction in DIRECTIONS])
+        rows.append([_safe_death_pose(directed[direction], direction, death_index) for direction in DIRECTIONS])
     return rows
 
 

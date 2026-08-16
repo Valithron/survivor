@@ -1,7 +1,7 @@
 # Survivor
 
 **Working title:** Survivor  
-**Status:** First Playable implementation assembled; hands-on milestone approval is pending.
+**Status:** First Playable approved by hands-on playtest; Vertical Slice convergence is active.
 
 Survivor is a small, Windows-first, anime-influenced pixel-art bullet-heaven game built in **Godot 4.7 with GDScript**. The player controls stylized versions of members of the Commune while fighting escalating zombie hordes, assembling a four-weapon build, using character-specific tactical and ultimate abilities, and surviving a 12-minute run that culminates in a final boss.
 
@@ -38,15 +38,15 @@ normal zombie archetypes, six shared weapons, the 12-minute director, the
 shopping-center parking-lot arena with respawning health pickups, the mutant
 boss, and the core run-flow UI.
 
-This is an implementation status, not a substitute for the First Playable
-gate: the next hands-on review should cover the full run, combat readability,
-and boss encounter. Do not begin Vertical Slice expansion until that review is
-approved.
+The First Playable full-run gate was approved through a hands-on boss-victory
+playtest. The active milestone is now Vertical Slice convergence: validate Ryan,
+Cooper, unlock progression, and production-facing roster/ability presentation
+against the complete shared run without expanding the V1 content scope.
 
 ## Run the First Playable
 
 Open the project in Godot 4.7 and run the project. The title screen leads to
-the Sterling-only character selection and then the current First Playable run.
+the character-selection screen and then the current full run.
 
 - **Move:** `W`, `A`, `S`, `D`
 - **Aim:** mouse; press `T` to toggle Auto Aim / Manual Aim

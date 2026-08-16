@@ -52,6 +52,16 @@ func _run_validation() -> void:
 			errors.append("Katana attack did not emit shared DamageEvent through target seam.")
 		elif target.received_events.back().tag != &"shared_weapon_katana":
 			errors.append("Katana damage event used the wrong tag.")
+		await get_tree().process_frame
+		var slash_effect := _first_katana_effect(world)
+		if slash_effect == null:
+			errors.append("Katana attack did not create its presentation effect.")
+		else:
+			var slash_sprite := _first_sprite(slash_effect)
+			if slash_sprite == null or slash_sprite.texture == null:
+				errors.append("Katana presentation is missing the production raster Sprite2D.")
+			elif slash_sprite.texture.get_size() != Vector2(384.0, 128.0):
+				errors.append("Katana production VFX atlas has the wrong raster dimensions.")
 		for rank in range(2, WeaponDefinition.MAX_RANK + 1):
 			if not inventory.apply_choice(WeaponUpgradeChoice.new(KATANA, rank)):
 				errors.append("Katana could not apply Rank %d through shared inventory." % rank)
@@ -108,6 +118,20 @@ func _entry_for(inventory: WeaponInventory, definition: WeaponDefinition) -> Wea
 	for entry in inventory.get_entries():
 		if entry.definition == definition:
 			return entry
+	return null
+
+
+func _first_katana_effect(parent: Node) -> KatanaSlashEffect:
+	for child in parent.get_children():
+		if child is KatanaSlashEffect:
+			return child as KatanaSlashEffect
+	return null
+
+
+func _first_sprite(parent: Node) -> Sprite2D:
+	for child in parent.get_children():
+		if child is Sprite2D:
+			return child as Sprite2D
 	return null
 
 

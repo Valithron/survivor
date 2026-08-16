@@ -131,6 +131,10 @@ func _validate_sterling_animation_cells(image: Image, errors: Array[String]) -> 
 		for row in range(3, 8):
 			if _visible_pixel_difference(image, row, row + 1, direction) < 48:
 				errors.append("Sterling run frames %d/%d are not materially distinct in direction %d." % [row - 3, row - 2, direction])
+		for first_row in range(3, 9):
+			for second_row in range(first_row + 1, 9):
+				if _visible_pixel_difference(image, first_row, second_row, direction) == 0:
+					errors.append("Sterling run contains duplicate cells at rows %d/%d in direction %d." % [first_row, second_row, direction])
 		var basic_difference := _visible_pixel_difference(image, 9, 10, direction)
 		if basic_difference < 24:
 			errors.append("Sterling alternating basic frames are not materially distinct in direction %d." % direction)
@@ -140,6 +144,7 @@ func _validate_sterling_animation_cells(image: Image, errors: Array[String]) -> 
 		for row in range(12, 15):
 			if _visible_pixel_difference(image, row, row + 1, direction) < 48:
 				errors.append("Sterling death stages %d/%d are not materially distinct in direction %d." % [row - 12, row - 11, direction])
+	_validate_clean_silhouettes(image, "Sterling", errors)
 
 
 func _validate_player_sheet(visual: Node, label: String, errors: Array[String]) -> void:
@@ -162,8 +167,61 @@ func _validate_player_sheet(visual: Node, label: String, errors: Array[String]) 
 		for row in range(3, 8):
 			if _visible_pixel_difference(image, row, row + 1, direction) < 8:
 				errors.append("%s run frames %d/%d are not materially distinct in direction %d." % [label, row - 3, row - 2, direction])
+		for first_row in range(3, 9):
+			for second_row in range(first_row + 1, 9):
+				if _visible_pixel_difference(image, first_row, second_row, direction) == 0:
+					errors.append("%s run contains duplicate cells at rows %d/%d in direction %d." % [label, first_row, second_row, direction])
 		if _visible_pixel_difference(image, 9, 10, direction) < 8:
 			errors.append("%s basic frames are not materially distinct in direction %d." % [label, direction])
+	if label == "Cooper":
+		_validate_clean_silhouettes(image, label, errors)
+
+
+func _validate_clean_silhouettes(image: Image, label: String, errors: Array[String]) -> void:
+	## A player frame may have only the primary connected character silhouette.
+	## The tiny detached muzzle flash is deliberate in rows 9/10; all other
+	## disconnected pixels must stay below a minimal raster-noise allowance.
+	for row in range(16):
+		for direction in range(DIRECTION_COUNT):
+			var cell := image.get_region(Rect2i(direction * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+			var detached_pixels := _detached_alpha_pixels(cell)
+			var allowed := 20 if row in [9, 10] else 4
+			if detached_pixels > allowed:
+				errors.append("%s sheet has %d disconnected opaque pixels at row %d, direction %d." % [label, detached_pixels, row, direction])
+
+
+func _detached_alpha_pixels(cell: Image) -> int:
+	var visited: Dictionary = {}
+	var components: Array[int] = []
+	for y in range(CELL_SIZE):
+		for x in range(CELL_SIZE):
+			var start := Vector2i(x, y)
+			if visited.has(start) or cell.get_pixelv(start).a <= 0.08:
+				continue
+			var stack: Array[Vector2i] = [start]
+			visited[start] = true
+			var count := 0
+			while not stack.is_empty():
+				var current: Vector2i = stack.pop_back()
+				count += 1
+				for offset_y in range(-1, 2):
+					for offset_x in range(-1, 2):
+						if offset_x == 0 and offset_y == 0:
+							continue
+						var next: Vector2i = current + Vector2i(offset_x, offset_y)
+						if next.x < 0 or next.y < 0 or next.x >= CELL_SIZE or next.y >= CELL_SIZE:
+							continue
+						if not visited.has(next) and cell.get_pixelv(next).a > 0.08:
+							visited[next] = true
+							stack.append(next)
+			components.append(count)
+	components.sort()
+	if components.size() <= 1:
+		return 0
+	var detached := 0
+	for index in range(components.size() - 1):
+		detached += components[index]
+	return detached
 
 
 func _has_ground_contact(image: Image, row: int, direction: int) -> bool:

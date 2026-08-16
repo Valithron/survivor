@@ -1,12 +1,19 @@
 class_name KatanaSlashEffect
 extends Node2D
 
-## Temporary geometric readability aid; final weapon VFX remains an art task.
+## Presentation-only adapter for Katana's three-frame production raster slash.
+## Damage geometry remains exclusively in KatanaRuntime.
+const SLASH_SHEET: Texture2D = preload("res://art/vfx/katana/katana_slash_sheet_v1.png")
+const FRAME_SIZE := 128
+const FRAME_COUNT := 3
+
 var direction := Vector2.RIGHT
 var radius := 80.0
 var arc_degrees := 120.0
 var lifetime := 0.16
 var _remaining := 0.16
+
+var _sprite: Sprite2D
 
 
 func configure(effect_direction: Vector2, effect_radius: float, effect_arc_degrees: float, effect_lifetime: float) -> void:
@@ -15,7 +22,17 @@ func configure(effect_direction: Vector2, effect_radius: float, effect_arc_degre
 	arc_degrees = effect_arc_degrees
 	lifetime = maxf(effect_lifetime, 0.01)
 	_remaining = lifetime
-	queue_redraw()
+	_update_visual()
+
+
+func _ready() -> void:
+	_sprite = Sprite2D.new()
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.texture = SLASH_SHEET
+	_sprite.region_enabled = true
+	_sprite.centered = true
+	add_child(_sprite)
+	_update_visual()
 
 
 func _process(delta: float) -> void:
@@ -23,13 +40,15 @@ func _process(delta: float) -> void:
 	if _remaining <= 0.0:
 		queue_free()
 		return
-	queue_redraw()
+	_update_visual()
 
 
-func _draw() -> void:
-	var progress := clampf(_remaining / lifetime, 0.0, 1.0)
-	var center_angle := direction.angle()
-	var half_arc := deg_to_rad(arc_degrees * 0.5)
-	var alpha := 0.25 + progress * 0.7
-	draw_arc(Vector2.ZERO, radius, center_angle - half_arc, center_angle + half_arc, 28, Color(0.72, 0.9, 1.0, alpha), 4.0, true)
-	draw_arc(Vector2.ZERO, radius * 0.72, center_angle - half_arc, center_angle + half_arc, 28, Color(0.38, 0.72, 1.0, alpha * 0.8), 2.0, true)
+func _update_visual() -> void:
+	if _sprite == null:
+		return
+	var elapsed := clampf(lifetime - _remaining, 0.0, lifetime)
+	var frame_index := mini(int(floor(elapsed / maxf(lifetime, 0.01) * float(FRAME_COUNT))), FRAME_COUNT - 1)
+	_sprite.region_rect = Rect2(float(frame_index * FRAME_SIZE), 0.0, FRAME_SIZE, FRAME_SIZE)
+	_sprite.rotation = direction.angle()
+	_sprite.scale = Vector2.ONE * (radius / 80.0)
+	_sprite.modulate.a = clampf(_remaining / maxf(lifetime, 0.01) * 1.25, 0.0, 1.0)

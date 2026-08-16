@@ -61,3 +61,15 @@ nearest-neighbour normalization and a bounded palette, then writes both sheets.
 It is intentionally small and deterministic so a later art revision can retain
 the same frame contract. Run it with the bundled workspace Python from the
 repository root after replacing either approved source file.
+
+## Player-Sheet Assembly Safety
+
+Sterling and Cooper are assembled from trusted full-pose directional sources.
+Do not composite broad rectangular masks from a flattened concept atlas, or use
+an entire concept panel without removing disconnected debris: either shortcut
+can place a second body, stray limbs, or unrelated effects inside one gameplay
+cell. `tests/prototype_art_validation.tscn` enforces the 8 x 16 / 64 px grid,
+non-empty cells, grounded live frames, non-duplicate run frames, and a single
+primary opaque silhouette per Sterling/Cooper cell (with a narrowly allowed
+small muzzle-flash exception on basic rows). Run the full headless validation
+script after regenerating either sheet.
