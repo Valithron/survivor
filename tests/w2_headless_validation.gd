@@ -44,9 +44,14 @@ func _run_validation() -> void:
 		for rank in range(2, 6): inventory.apply_choice(WeaponUpgradeChoice.new(GRENADES, rank))
 		if int(GRENADES.get_rank_definition(5).tuning.get("grenade_count", 0)) < 3:
 			errors.append("Grenade Launcher Rank 5 lacks its triple-barrage capstone.")
-	inventory.reset_loadout(); world.queue_free()
-	if errors.is_empty(): print("W2 WEAPON TEST: PASS"); get_tree().quit(0)
-	for error_text in errors: printerr("W2 WEAPON TEST: " + error_text)
+	inventory.reset_loadout()
+	world.queue_free()
+	if errors.is_empty():
+		print("W2 WEAPON TEST: PASS")
+		get_tree().quit(0)
+		return
+	for error_text in errors:
+		printerr("W2 WEAPON TEST: " + error_text)
 	get_tree().quit(1)
 func _entry_for(inventory: WeaponInventory, definition: WeaponDefinition) -> WeaponLoadoutEntry:
 	for entry in inventory.get_entries():

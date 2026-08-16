@@ -1,7 +1,7 @@
 # Survivor
 
 **Working title:** Survivor  
-**Status:** Planning complete enough for implementation packaging. No production game code should be added until the implementation handoff is read.
+**Status:** First Playable implementation assembled; hands-on milestone approval is pending.
 
 Survivor is a small, Windows-first, anime-influenced pixel-art bullet-heaven game built in **Godot 4.7 with GDScript**. The player controls stylized versions of members of the Commune while fighting escalating zombie hordes, assembling a four-weapon build, using character-specific tactical and ultimate abilities, and surviving a 12-minute run that culminates in a final boss.
 
@@ -29,6 +29,33 @@ Deeper specifications:
 - [`docs/ART_AND_ANIMATION.md`](docs/ART_AND_ANIMATION.md)
 - [`docs/TECHNICAL_ARCHITECTURE.md`](docs/TECHNICAL_ARCHITECTURE.md)
 - [`docs/DECISION_STATUS.md`](docs/DECISION_STATUS.md)
+
+## Current Development State
+
+The approved Prototype combat chassis and the First Playable work packets are
+integrated locally. The current runnable build contains Sterling, all three
+normal zombie archetypes, six shared weapons, the 12-minute director, the
+shopping-center parking-lot arena with respawning health pickups, the mutant
+boss, and the core run-flow UI.
+
+This is an implementation status, not a substitute for the First Playable
+gate: the next hands-on review should cover the full run, combat readability,
+and boss encounter. Do not begin Vertical Slice expansion until that review is
+approved.
+
+## Run the First Playable
+
+Open the project in Godot 4.7 and run the project. The title screen leads to
+the Sterling-only character selection and then the current First Playable run.
+
+- **Move:** `W`, `A`, `S`, `D`
+- **Aim:** mouse; press `T` to toggle Auto Aim / Manual Aim
+- **Tactical burst:** `Q`
+- **Radial storm ultimate:** `E`
+- **Pause / resume:** `Esc`
+
+Sterling's basic attack fires continuously. Level-up selections pause gameplay
+and are made from the three displayed choices.
 
 ## Core Identity
 
