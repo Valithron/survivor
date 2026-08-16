@@ -76,6 +76,11 @@ func _run_validation() -> void:
 		turret_runtime.turret_deployed.connect(func(turret: AutoTurret) -> void: deployed.append(turret))
 		if not turret_runtime.force_deploy():
 			errors.append("Auto-Turret could not deploy its first autonomous sentry.")
+		await get_tree().process_frame
+		if not deployed.is_empty():
+			var turret_sprite := _first_sprite(deployed[0])
+			if turret_sprite == null or turret_sprite.texture == null or turret_sprite.texture.get_size() != Vector2(64, 64):
+				errors.append("Auto-Turret did not instantiate its 64px raster presentation sprite.")
 		await get_tree().create_timer(1.0).timeout
 		if deployed.is_empty():
 			errors.append("Auto-Turret did not emit a deployment event.")
@@ -113,3 +118,10 @@ func _has_damage_tag(events: Array[DamageEvent], tag: StringName) -> bool:
 		if event.tag == tag:
 			return true
 	return false
+
+
+func _first_sprite(node: Node) -> Sprite2D:
+	for child in node.get_children():
+		if child is Sprite2D:
+			return child as Sprite2D
+	return null

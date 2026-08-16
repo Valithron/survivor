@@ -3,24 +3,33 @@ extends Node2D
 
 signal shot_fired(origin: Vector2, target_position: Vector2, projectile_count: int)
 
+const TURRET_SPRITE: Texture2D = preload("res://art/vfx/turret/auto_turret_v1.png")
+
 var _damage_source: Object
 var _tuning: Dictionary = {}
 var _remaining_lifetime := 0.0
 var _cooldown_remaining := 0.0
+var _sprite: Sprite2D
+
+
+func _ready() -> void:
+	_sprite = Sprite2D.new()
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.texture = TURRET_SPRITE
+	_sprite.centered = true
+	add_child(_sprite)
 
 
 func configure(source: Object, tuning: Dictionary) -> void:
 	_damage_source = source
 	apply_tuning(tuning)
 	_remaining_lifetime = _lifetime()
-	queue_redraw()
 
 
 func apply_tuning(tuning: Dictionary) -> void:
 	_tuning = tuning.duplicate(true)
 	_cooldown_remaining = minf(_cooldown_remaining, _cooldown())
 	_remaining_lifetime = minf(_remaining_lifetime, _lifetime()) if _remaining_lifetime > 0.0 else _lifetime()
-	queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -60,13 +69,6 @@ func _spawn_projectile(direction: Vector2) -> void:
 	var projectile := ThrowingKnifeProjectile.new()
 	parent.add_child(projectile)
 	projectile.configure(global_position + direction * 12.0, direction, _speed(), _damage(), _projectile_lifetime(), _projectile_radius(), _pierce_count(), _damage_source, &"shared_weapon_auto_turret")
-
-
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, 14.0, Color(0.09, 0.14, 0.18, 0.96))
-	draw_circle(Vector2.ZERO, 10.0, Color(0.23, 0.38, 0.48, 1.0))
-	draw_rect(Rect2(4.0, -3.0, 15.0, 6.0), Color(0.72, 0.84, 0.9, 1.0), true)
-	draw_circle(Vector2(0, 0), 3.0, Color(1.0, 0.56, 0.18, 1.0))
 
 
 func _cooldown() -> float: return maxf(float(_tuning.get("fire_cooldown", 0.6)), 0.01)
