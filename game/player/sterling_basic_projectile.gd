@@ -12,6 +12,9 @@ var radius := 3.0
 var damage_source: Object
 var damage_tag: StringName = &"sterling_dual_pistols"
 
+const TRACER_SHEET: Texture2D = preload("res://art/vfx/sterling/sterling_pistol_tracer_sheet_v1.png")
+var _sprite: Sprite2D
+
 var _remaining_lifetime := 0.0
 var _spent := false
 
@@ -36,7 +39,6 @@ func configure(
 	damage_tag = shot_damage_tag
 	_remaining_lifetime = lifetime_seconds
 	rotation = direction.angle()
-	queue_redraw()
 
 
 func _ready() -> void:
@@ -49,6 +51,12 @@ func _ready() -> void:
 	shape.radius = radius
 	collision.shape = shape
 	add_child(collision)
+	_sprite = Sprite2D.new()
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_sprite.texture = TRACER_SHEET
+	_sprite.region_enabled = true
+	_sprite.region_rect = Rect2(0, 0, 64, 64)
+	add_child(_sprite)
 	area_entered.connect(_on_area_entered)
 	body_entered.connect(_on_body_entered)
 
@@ -58,12 +66,6 @@ func _physics_process(delta: float) -> void:
 	_remaining_lifetime -= delta
 	if _remaining_lifetime <= 0.0:
 		queue_free()
-
-
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, radius + 2.0, Color("8ad7ff"))
-	draw_circle(Vector2.ZERO, radius, Color("f5fbff"))
-	draw_line(Vector2(-radius * 2.0, 0.0), Vector2(radius * 3.0, 0.0), Color("6cb6e7"), 1.5, true)
 
 
 func _on_area_entered(area: Area2D) -> void:
