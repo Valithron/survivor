@@ -4,12 +4,19 @@ extends Node2D
 var world_points: PackedVector2Array = PackedVector2Array()
 var lifetime := 0.12
 var _remaining := 0.12
+const IMPACT: Texture2D = preload("res://art/vfx/lightning/chain_impact_v1.png")
 
 func configure(points: PackedVector2Array, duration: float) -> void:
 	world_points = points
 	lifetime = maxf(duration, 0.01)
 	_remaining = lifetime
 	queue_redraw()
+	for point in world_points:
+		var sprite:=Sprite2D.new()
+		sprite.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite.texture=IMPACT
+		sprite.global_position=point
+		add_child(sprite)
 
 func _process(delta: float) -> void:
 	_remaining -= delta
