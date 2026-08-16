@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="UnlockProgressionDefinition" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://game/data/unlock_progression_definition.gd" id="1_definition"]
+[ext_resource type="Script" path="res://game/data/character_unlock_rule.gd" id="2_rule"]
+
+[sub_resource type="Resource" id="SterlingRule"]
+script = ExtResource("2_rule")
+character_id = &"sterling"
+required_natural_run_count = 0
+
+[sub_resource type="Resource" id="RyanRule"]
+script = ExtResource("2_rule")
+character_id = &"ryan"
+required_natural_run_count = 1
+
+[sub_resource type="Resource" id="CooperRule"]
+script = ExtResource("2_rule")
+character_id = &"cooper"
+required_natural_run_count = 3
+
+[resource]
+script = ExtResource("1_definition")
+save_version = 1
+character_unlock_rules = Array[ExtResource("2_rule")]([SubResource("SterlingRule"), SubResource("RyanRule"), SubResource("CooperRule")])

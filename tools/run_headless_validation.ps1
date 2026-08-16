@@ -45,7 +45,9 @@ $validations = @(
 	@{ Name = 'R1 run director'; Mode = '--scene'; Target = 'res://tests/r1_headless_validation.tscn' },
 	@{ Name = 'M1 arena and healing'; Mode = '--scene'; Target = 'res://tests/m1_headless_validation.tscn' },
 	@{ Name = 'B1 boss'; Mode = '--scene'; Target = 'res://tests/b1_headless_validation.tscn' },
-	@{ Name = 'U1 HUD and run flow'; Mode = '--scene'; Target = 'res://tests/u1_headless_validation.tscn' }
+	@{ Name = 'U1 HUD and run flow'; Mode = '--scene'; Target = 'res://tests/u1_headless_validation.tscn' },
+	@{ Name = 'META-1 unlock progression'; Mode = '--scene'; Target = 'res://tests/meta_headless_validation.tscn' },
+	@{ Name = 'Late-run performance snapshot'; Mode = '--scene'; Target = 'res://tests/late_run_performance_snapshot.tscn' }
 )
 
 foreach ($validation in $validations) {

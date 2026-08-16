@@ -271,7 +271,10 @@ func _finish_run(outcome: StringName, message: String) -> void:
 	choice_panel.visible = false
 	boss_bar.visible = false
 	pause_panel.visible = false
-	outcome_label.text = "%s\n\nTIME %s   LEVEL %d   XP %d\n\nChoose a run-flow action below." % [message, _format_time(RunController.elapsed_seconds), progression.current_level, progression.total_xp]
+	var unlock_track := ""
+	if outcome == &"death" or outcome == &"victory":
+		unlock_track = "\nRUN TRACK %d // Check character select for unlock status." % MetaProgression.completed_natural_runs
+	outcome_label.text = "%s\n\nTIME %s   LEVEL %d   XP %d%s\n\nChoose a run-flow action below." % [message, _format_time(RunController.elapsed_seconds), progression.current_level, progression.total_xp, unlock_track]
 	outcome_label.visible = true
 	outcome_actions.visible = true
 	_last_event = message
