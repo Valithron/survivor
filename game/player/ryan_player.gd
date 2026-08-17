@@ -2,6 +2,7 @@ class_name RyanPlayer
 extends CharacterBody2D
 
 const IMPACT_EFFECT_SCRIPT := preload("res://game/player/ryan_impact_effect.gd")
+const CHARGE_TRAIL: Texture2D = preload("res://art/vfx/ryan/charge_trail_v1.png")
 
 ## Ryan's independent Bruiser runtime. It deliberately reuses only the narrow
 ## F0 targeting/damage and animation seams, leaving Sterling's Speedster code
@@ -47,6 +48,7 @@ var _charge_hit_ids: Dictionary = {}
 var _impacts_remaining := 0
 var _impact_delay_remaining := 0.0
 var _impact_index := 0
+var _charge_trail: Sprite2D
 
 
 func _ready() -> void:
@@ -59,6 +61,12 @@ func _ready() -> void:
 	health_component.damage_received.connect(_on_health_damage_received)
 	health_component.died.connect(_on_health_died)
 	_add_configured_visual_if_available()
+	_charge_trail = Sprite2D.new()
+	_charge_trail.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_charge_trail.texture = CHARGE_TRAIL
+	_charge_trail.centered = false
+	_charge_trail.visible = false
+	add_child(_charge_trail)
 	_update_animation_state()
 
 
@@ -246,12 +254,18 @@ func _fire_basic() -> void:
 
 
 func _process_armored_charge(delta: float) -> void:
+	if _charge_trail != null:
+		_charge_trail.visible = true
+		_charge_trail.rotation = _charge_direction.angle()
+		_charge_trail.position = -_charge_direction * 92.0
 	_charge_duration_remaining = maxf(_charge_duration_remaining - delta, 0.0)
 	velocity = _charge_direction * kit_tuning.charge_speed
 	move_and_slide()
 	_apply_charge_hits()
 	if _charge_duration_remaining <= 0.0:
 		velocity = Vector2.ZERO
+		if _charge_trail != null:
+			_charge_trail.visible = false
 
 
 func _apply_charge_hits() -> void:
