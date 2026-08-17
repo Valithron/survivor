@@ -38,6 +38,8 @@ var _target_refresh_remaining := 0.0
 var _basic_animation_remaining := 0.0
 var _overclock_remaining := 0.0
 var _ultimate_remaining := 0.0
+const ABILITY_AURA: Texture2D = preload("res://art/vfx/cooper/ability_aura_v1.png")
+var _ability_aura: Sprite2D
 
 
 func _ready() -> void:
@@ -50,6 +52,11 @@ func _ready() -> void:
 	health_component.damage_received.connect(_on_health_damage_received)
 	health_component.died.connect(_on_health_died)
 	_add_configured_visual_if_available()
+	_ability_aura = Sprite2D.new()
+	_ability_aura.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_ability_aura.texture = ABILITY_AURA
+	_ability_aura.visible = false
+	add_child(_ability_aura)
 	_update_animation_state()
 
 
@@ -189,6 +196,9 @@ func _process_kit_state(delta: float) -> void:
 	ultimate_cooldown_remaining = maxf(ultimate_cooldown_remaining - delta, 0.0)
 	_overclock_remaining = maxf(_overclock_remaining - delta, 0.0)
 	_ultimate_remaining = maxf(_ultimate_remaining - delta, 0.0)
+	if _ability_aura != null:
+		_ability_aura.visible = is_overclock_active() or is_ultimate_active()
+		_ability_aura.modulate = Color(1.0, 0.78, 0.58, 0.9) if is_overclock_active() else Color(1.0, 0.42, 0.22, 1.0)
 
 
 func _process_movement() -> void:
