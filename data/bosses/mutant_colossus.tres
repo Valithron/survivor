@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BossDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://game/data/boss_definition.gd" id="1_definition"]
+[ext_resource type="PackedScene" path="res://art/boss/mutant_boss/mutant_boss_visual.tscn" id="2_visual"]
+
+[resource]
+script = ExtResource("1_definition")
+boss_id = &"mutant_colossus"
+display_name = "Mutant Colossus"
+archetype_summary = "Huge asymmetrical multi-mutated zombie with one grotesquely oversized arm."
+maximum_health = 2200.0
+move_speed = 62.0
+collision_radius = 58.0
+contact_damage_per_second = 13.0
+attack_cooldown_seconds = 2.5
+attack_trigger_distance = 360.0
+ground_slam_damage = 28.0
+ground_slam_radius = 190.0
+ground_slam_windup_seconds = 1.15
+sweep_damage = 24.0
+sweep_range = 270.0
+sweep_angle_degrees = 118.0
+sweep_windup_seconds = 1.0
+charge_damage = 31.0
+charge_distance = 470.0
+charge_speed = 610.0
+charge_windup_seconds = 1.25
+charge_max_seconds = 1.1
+visual_scene = ExtResource("2_visual")
+

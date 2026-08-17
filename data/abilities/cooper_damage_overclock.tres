@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/data/ability_definition.gd" id="1_ability"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"cooper_damage_overclock"
+display_name = "Damage Overclock"
+summary = "Major temporary damage increase while movement speed is reduced."
+cooldown_seconds = 9.0

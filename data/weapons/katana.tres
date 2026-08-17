@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="WeaponDefinition" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://game/data/weapon_definition.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://game/data/weapon_rank_definition.gd" id="2_rank"]
+[ext_resource type="PackedScene" path="res://game/weapons/katana_runtime.tscn" id="3_runtime"]
+
+[sub_resource type="Resource" id="WeaponRank_katana_1"]
+script = ExtResource("2_rank")
+rank = 1
+summary = "Acquire Katana: a fast close-range sweep."
+tuning = {"arc_degrees": 115.0, "cooldown": 0.78, "damage": 18.0, "knockback": 55.0, "max_targets": 3, "radius": 88.0, "slash_count": 1}
+
+[sub_resource type="Resource" id="WeaponRank_katana_2"]
+script = ExtResource("2_rank")
+rank = 2
+summary = "Wider, faster Katana sweeps."
+tuning = {"arc_degrees": 140.0, "cooldown": 0.68, "damage": 23.0, "knockback": 60.0, "max_targets": 4, "radius": 96.0, "slash_count": 1}
+
+[sub_resource type="Resource" id="WeaponRank_katana_3"]
+script = ExtResource("2_rank")
+rank = 3
+summary = "Katana reaches deeper into nearby pressure."
+tuning = {"arc_degrees": 165.0, "cooldown": 0.58, "damage": 29.0, "knockback": 65.0, "max_targets": 5, "radius": 108.0, "slash_count": 1}
+
+[sub_resource type="Resource" id="WeaponRank_katana_4"]
+script = ExtResource("2_rank")
+rank = 4
+summary = "Heavy broad sweeps clear immediate space."
+tuning = {"arc_degrees": 220.0, "cooldown": 0.50, "damage": 36.0, "knockback": 75.0, "max_targets": 7, "radius": 122.0, "slash_count": 1}
+
+[sub_resource type="Resource" id="WeaponRank_katana_5"]
+script = ExtResource("2_rank")
+rank = 5
+summary = "Capstone: twin full-circle storm sweeps."
+tuning = {"arc_degrees": 360.0, "cooldown": 0.42, "damage": 48.0, "knockback": 85.0, "max_targets": 12, "radius": 138.0, "slash_count": 2}
+
+[resource]
+script = ExtResource("1_weapon")
+weapon_id = &"katana"
+display_name = "Katana"
+summary = "Close-range sweep shared weapon."
+targeting_mode = 2
+runtime_scene = ExtResource("3_runtime")
+ranks = Array[ExtResource("2_rank")]([SubResource("WeaponRank_katana_1"), SubResource("WeaponRank_katana_2"), SubResource("WeaponRank_katana_3"), SubResource("WeaponRank_katana_4"), SubResource("WeaponRank_katana_5")])

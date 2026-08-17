@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://game/data/character_definition.gd" id="1_character"]
+[ext_resource type="Resource" path="res://data/abilities/ryan_combat_shotgun.tres" id="2_basic"]
+[ext_resource type="Resource" path="res://data/abilities/ryan_armored_charge.tres" id="3_tactical"]
+[ext_resource type="Resource" path="res://data/abilities/ryan_escalating_impacts.tres" id="4_ultimate"]
+[ext_resource type="Script" path="res://game/data/character_milestones.gd" id="5_milestones"]
+[ext_resource type="PackedScene" path="res://art/characters/ryan/ryan_visual.tscn" id="6_visual"]
+
+[sub_resource type="Resource" id="CharacterMilestones_ryan"]
+script = ExtResource("5_milestones")
+
+[resource]
+script = ExtResource("1_character")
+character_id = &"ryan"
+display_name = "Ryan"
+archetype_summary = "Bruiser: durable close-range pressure that opens space through controlled displacement."
+base_max_health = 135.0
+move_speed = 218.0
+basic_attack = ExtResource("2_basic")
+tactical = ExtResource("3_tactical")
+ultimate = ExtResource("4_ultimate")
+milestones = SubResource("CharacterMilestones_ryan")
+sprite_scene = ExtResource("6_visual")

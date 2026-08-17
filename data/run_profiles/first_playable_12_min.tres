@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="RunProfile" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://game/data/run_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://game/data/run_phase_definition.gd" id="2_phase"]
+
+[sub_resource type="Resource" id="Swarm"]
+script = ExtResource("2_phase")
+at_seconds = 150.0
+event_id = &"swarm_surge"
+composition_tags = PackedStringArray("swarm_emphasis")
+[sub_resource type="Resource" id="Fast"]
+script = ExtResource("2_phase")
+at_seconds = 300.0
+event_id = &"fast_surge"
+composition_tags = PackedStringArray("fast_emphasis")
+[sub_resource type="Resource" id="Tank"]
+script = ExtResource("2_phase")
+at_seconds = 450.0
+event_id = &"tank_surge"
+composition_tags = PackedStringArray("tank_emphasis")
+[sub_resource type="Resource" id="Combined"]
+script = ExtResource("2_phase")
+at_seconds = 600.0
+event_id = &"combined_surge"
+composition_tags = PackedStringArray("combined_pressure")
+[sub_resource type="Resource" id="Boss"]
+script = ExtResource("2_phase")
+at_seconds = 720.0
+event_id = &"boss_arrival"
+composition_tags = PackedStringArray("boss", "combined_pressure")
+
+[resource]
+script = ExtResource("1_profile")
+profile_id = &"first_playable_12_min"
+display_name = "First Playable 12 Minute Run"
+survival_duration_seconds = 720.0
+end_run_at_duration = false
+scheduled_phases = Array[ExtResource("2_phase")]([SubResource("Swarm"), SubResource("Fast"), SubResource("Tank"), SubResource("Combined"), SubResource("Boss")])

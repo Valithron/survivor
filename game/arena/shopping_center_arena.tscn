@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://game/arena/shopping_center_arena.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/arena/abandoned_shopping_center.tres" id="2_definition"]
+[ext_resource type="Texture2D" path="res://art/arena/shopping_center/parking_lot_2560.png" id="3_background"]
+
+[node name="ShoppingCenterArena" type="Node2D"]
+script = ExtResource("1_script")
+definition = ExtResource("2_definition")
+
+[node name="ParkingLotBackground" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_background")
+position = Vector2(1280, 1280)
+z_index = -1

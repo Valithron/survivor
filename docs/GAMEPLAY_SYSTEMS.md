@@ -24,8 +24,9 @@
 
 - Manual keyboard movement.
 - No universal dodge roll.
-- The arena should be large enough to scroll and should not feel cramped.
-- Terrain and props may shape movement, but the arena is not an exploration game or maze.
+- The arena is an abandoned shopping-center parking lot: large enough to scroll and not feel cramped.
+- Storefront edges, scattered cars, cart-related obstacles, and recognizable health landmarks provide simple positioning texture.
+- Terrain and props may shape movement, but the arena is not an exploration game or maze; broad horde-survival lanes remain open.
 
 ### Basic Attack Aiming
 
@@ -240,14 +241,19 @@ Continuous spawning occurs between surges. The surges should change the perceive
 
 ## 10. Boss Phase
 
-The final boss is a huge mutated zombie.
+The final boss is a huge multi-mutated zombie horror: a recognizably humanoid form with an asymmetrical silhouette, one grotesquely oversized mutated arm, and smaller torso growths.
 
 Behavioral identity:
 
 - durable
 - slow
-- several clearly telegraphed area attacks
+- exactly three clearly telegraphed core attacks:
+  - **Ground Slam:** windup, circular impact telegraph, and damaging radial shockwave that forces the player out of nearby space.
+  - **Sweeping Mutated-Arm Smash:** long windup and wide frontal arc that encourages moving around the boss rather than simply retreating.
+  - **Mutant Charge:** long straight-line telegraph followed by a heavy rush through the active battlefield and horde.
 - must remain readable while ordinary late-game zombies continue spawning at full intensity
+
+Do not add boss summons, phases, ranged attacks, vomit attacks, or other major boss mechanics without a separate decision.
 
 At 12:00:
 
@@ -255,6 +261,7 @@ At 12:00:
 2. normal late-game horde remains active
 3. normal late-game spawning continues
 4. guaranteed health pickup appears nearby
+5. boss health bar appears
 
 A successful boss fight should usually add roughly 1 to 2 minutes, but it is not hard time-limited.
 

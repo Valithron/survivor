@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/data/ability_definition.gd" id="1_ability"]
+
+[resource]
+script = ExtResource("1_ability")
+ability_id = &"ryan_escalating_impacts"
+display_name = "Escalating Impacts"
+summary = "Several outward impacts culminating in one huge crowd-reset shockwave."
+cooldown_seconds = 30.0

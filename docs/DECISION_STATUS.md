@@ -116,6 +116,15 @@ Core six:
 - Guaranteed nearby health pickup at boss arrival.
 - Extremely rare revive pickup/opportunity is part of the intended game.
 
+## Arena
+
+- The one V1 arena is an **abandoned shopping center** centered on a broad open parking lot.
+- Abandoned storefront edges establish the outer environmental identity.
+- Scattered abandoned cars, carts/cart returns, and simple lot obstacles create positioning texture without maze-like navigation.
+- The central combat space stays open enough for very large zombie hordes.
+- Recognizable landmarks make fixed health-pickup locations learnable.
+- Environmental detail remains low to moderate so Sterling and the horde dominate readability.
+
 ## XP / Economy
 
 - Kills focus on XP.
@@ -138,10 +147,14 @@ Core six:
 
 ## Boss
 
-- Huge mutated zombie.
-- Durable.
-- Slow.
-- Several clearly telegraphed area attacks.
+- Huge multi-mutated zombie horror that remains recognizably humanoid.
+- An asymmetrical silhouette is defined by one grotesquely oversized mutated arm plus smaller torso growths.
+- Durable and slow.
+- Its complete core moveset is exactly three readable attacks:
+  - **Ground Slam:** a strong windup, large circular impact telegraph, and damaging radial shockwave.
+  - **Sweeping Mutated-Arm Smash:** a long windup and broad frontal arc tied to the oversized arm.
+  - **Mutant Charge:** a long straight-line telegraph followed by a heavy rush through the active battlefield.
+- Do not add boss summons, phase transformations, ranged/vomit attacks, or other major boss mechanics without a later explicit decision.
 
 ## Death / Progression
 
@@ -239,9 +252,6 @@ Core six:
 
 The following remain unresolved and should not block current implementation unless the work packet specifically needs them:
 
-- exact arena environmental theme
-- exact final boss visual design/silhouette
-- exact boss attack list
 - exact per-rank effects for each shared weapon
 - exact character base-stat numbers
 - exact character tactical/ultimate cooldowns and durations
@@ -261,7 +271,6 @@ These are reasonable working assumptions but are not product requirements unless
 - Throwing Knives + Auto-Turret are a sensible first post-Prototype weapon batch.
 - Chain Lightning + Grenade Launcher are a sensible second post-Prototype weapon batch.
 - Straightforward Godot nodes plus targeted pooling/reuse should handle the intended scale before lower-level server APIs are necessary.
-- The arena should include enough landmarks to help players remember healing locations.
 
 Implementation may use these assumptions when they are low-risk and easily reversible. Do not treat them as immutable design requirements.
 

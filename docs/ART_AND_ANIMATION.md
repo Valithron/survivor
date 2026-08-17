@@ -187,19 +187,28 @@ Similarly, establish a lean canonical zombie template before producing all three
 
 ## Arena Art
 
-The V1 arena is a large scrolling combat space.
+The V1 arena is an **abandoned shopping center**: a large scrolling, broad open parking lot surrounded by deserted storefront edges.
 
 Art density should be low to moderate:
 
-- simple terrain
-- simple props
-- enough landmarks to orient the player
-- fixed health pickup locations should be visually recognizable
-- obstacles may create escape routes and positioning decisions
+- weathered asphalt and faded parking lines establish the open combat space
+- scattered abandoned cars, carts/cart returns, and storefront-adjacent props provide simple positioning texture
+- broad open movement lanes prevent the lot from becoming a maze or exploration space
+- deliberate landmarks such as awnings, cart returns, and lane markings make fixed health-pickup locations recognizable
 
-Do not fill the arena with decorative animation or clutter.
+Do not fill the arena with decorative animation or clutter; characters and hordes must remain visually dominant.
 
-The exact environmental theme remains open. Candidate themes were discussed but not locked. Do not silently choose a final setting without explicit approval if that choice materially changes the game's identity.
+## Boss Art
+
+The final boss is a huge, recognizably humanoid multi-mutated zombie horror. One grotesquely oversized mutated arm defines an asymmetrical silhouette, supported by smaller torso growths. It is visibly much larger than a normal zombie without simply becoming an enlarged normal zombie.
+
+The three locked attacks need distinct pre-impact visual language:
+
+- Ground Slam: circular warm impact zone and radial shockwave.
+- Sweeping Mutated-Arm Smash: broad frontal arc anchored to the oversized arm.
+- Mutant Charge: long cool high-contrast lane telegraph before the rush.
+
+Telegraphs must be stronger and clearer than incidental weapon VFX, but must not hide Sterling's silhouette.
 
 ## HUD and Menus
 

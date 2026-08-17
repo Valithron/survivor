@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://game/data/character_definition.gd" id="1_character"]
+[ext_resource type="Resource" path="res://data/abilities/sterling_dual_pistols.tres" id="2_basic"]
+[ext_resource type="Resource" path="res://data/abilities/sterling_reposition_burst.tres" id="3_tactical"]
+[ext_resource type="Resource" path="res://data/abilities/sterling_radial_storm.tres" id="4_ultimate"]
+[ext_resource type="Script" path="res://game/data/character_milestones.gd" id="5_milestones"]
+[ext_resource type="PackedScene" path="res://art/characters/sterling/sterling_visual.tscn" id="6_visual"]
+
+[sub_resource type="Resource" id="CharacterMilestones_sterling"]
+script = ExtResource("5_milestones")
+
+[resource]
+script = ExtResource("1_character")
+character_id = &"sterling"
+display_name = "Sterling"
+archetype_summary = "Speedster: mobile ranged pressure whose basic cadence rises with movement."
+base_max_health = 100.0
+move_speed = 260.0
+basic_attack = ExtResource("2_basic")
+tactical = ExtResource("3_tactical")
+ultimate = ExtResource("4_ultimate")
+milestones = SubResource("CharacterMilestones_sterling")
+sprite_scene = ExtResource("6_visual")

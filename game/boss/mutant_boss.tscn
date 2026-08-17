@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://game/boss/mutant_boss.gd" id="1_boss"]
+[ext_resource type="Resource" path="res://data/bosses/mutant_colossus.tres" id="2_definition"]
+[ext_resource type="Script" path="res://game/core/health_component.gd" id="3_health"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_boss"]
+radius = 58.0
+
+[node name="MutantBoss" type="CharacterBody2D"]
+script = ExtResource("1_boss")
+definition = ExtResource("2_definition")
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_boss")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_health")
+

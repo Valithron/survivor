@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="SterlingKitTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/player/sterling_kit_tuning.gd" id="1_tuning"]
+
+[resource]
+script = ExtResource("1_tuning")
+basic_damage_growth_per_level = 0.05
+level_five_basic_damage_multiplier = 1.25
+level_five_basic_fire_rate_multiplier = 1.18
+tactical_distance = 190.0
+tactical_fire_rate_buff_seconds = 2.5
+tactical_fire_rate_multiplier = 1.45
+level_ten_tactical_distance_multiplier = 1.25
+level_ten_tactical_buff_duration_multiplier = 1.25
+level_ten_tactical_fire_rate_multiplier = 1.7
+tactical_trail_seconds = 0.3
+ultimate_burst_count = 4
+ultimate_burst_interval_seconds = 0.18
+ultimate_projectiles_per_burst = 8
+ultimate_projectile_damage = 20.0
+ultimate_projectile_speed = 640.0
+ultimate_projectile_lifetime_seconds = 0.9
+ultimate_projectile_radius = 3.0
+level_fifteen_ultimate_bonus_bursts = 2
+level_fifteen_ultimate_bonus_projectiles_per_burst = 4
+level_fifteen_ultimate_damage_multiplier = 1.35
+maximum_buffed_basic_shots_per_second = 16.0

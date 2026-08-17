@@ -1,0 +1,233 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Script" path="res://tests/prototype_playtest.gd" id="1_playtest"]
+[ext_resource type="Script" path="res://game/enemies/enemy_spawner.gd" id="3_spawner"]
+[ext_resource type="Resource" path="res://data/enemies/swarm_spawn_config.tres" id="4_spawn_config"]
+[ext_resource type="PackedScene" path="res://game/enemies/swarm_zombie.tscn" id="5_enemy"]
+[ext_resource type="Script" path="res://game/weapons/weapon_inventory.gd" id="6_inventory"]
+[ext_resource type="Script" path="res://game/progression/progression_controller.gd" id="7_progression"]
+[ext_resource type="Resource" path="res://data/enemies/fast_spawn_config.tres" id="8_fast_config"]
+[ext_resource type="PackedScene" path="res://game/enemies/fast_zombie.tscn" id="9_fast_enemy"]
+[ext_resource type="Resource" path="res://data/enemies/tank_spawn_config.tres" id="10_tank_config"]
+[ext_resource type="PackedScene" path="res://game/enemies/tank_zombie.tscn" id="11_tank_enemy"]
+[ext_resource type="Script" path="res://game/run/run_director.gd" id="12_director"]
+[ext_resource type="Resource" path="res://data/run_profiles/first_playable_12_min.tres" id="13_profile"]
+[ext_resource type="Resource" path="res://data/run_profiles/first_playable_director_tuning.tres" id="14_tuning"]
+[ext_resource type="PackedScene" path="res://game/arena/shopping_center_arena.tscn" id="15_arena"]
+[ext_resource type="Script" path="res://game/ui/damage_number_layer.gd" id="16_damage_numbers"]
+[ext_resource type="Script" path="res://game/ui/core_hud.gd" id="17_core_hud"]
+
+[node name="PrototypePlaytest" type="Node2D"]
+script = ExtResource("1_playtest")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.045, 0.065, 0.06, 1)
+mouse_filter = 2
+
+[node name="World" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="Arena" parent="World" instance=ExtResource("15_arena")]
+
+[node name="PlayerAnchor" type="Node2D" parent="World"]
+
+[node name="DamageNumbers" type="Node2D" parent="World"]
+script = ExtResource("16_damage_numbers")
+
+[node name="EnemySpawner" type="Node2D" parent="World"]
+script = ExtResource("3_spawner")
+spawn_configuration = ExtResource("4_spawn_config")
+enemy_scene = ExtResource("5_enemy")
+auto_start = false
+target_contact_radius = 16.0
+
+[node name="FastSpawner" type="Node2D" parent="World"]
+script = ExtResource("3_spawner")
+spawn_configuration = ExtResource("8_fast_config")
+enemy_scene = ExtResource("9_fast_enemy")
+auto_start = false
+target_contact_radius = 16.0
+
+[node name="TankSpawner" type="Node2D" parent="World"]
+script = ExtResource("3_spawner")
+spawn_configuration = ExtResource("10_tank_config")
+enemy_scene = ExtResource("11_tank_enemy")
+auto_start = false
+target_contact_radius = 16.0
+
+[node name="RunDirector" type="Node" parent="World"]
+script = ExtResource("12_director")
+run_profile = ExtResource("13_profile")
+tuning = ExtResource("14_tuning")
+swarm_spawner_path = NodePath("../EnemySpawner")
+fast_spawner_path = NodePath("../FastSpawner")
+tank_spawner_path = NodePath("../TankSpawner")
+
+[node name="WeaponInventory" type="Node" parent="World"]
+script = ExtResource("6_inventory")
+
+[node name="ProgressionController" type="Node" parent="World"]
+script = ExtResource("7_progression")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 505.0
+offset_bottom = 558.0
+color = Color(0.025, 0.045, 0.065, 0.94)
+mouse_filter = 2
+
+[node name="Status" type="Label" parent="CanvasLayer/HUD"]
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 468.0
+offset_bottom = 520.0
+theme_override_colors/font_color = Color(0.9, 0.96, 0.92, 1)
+theme_override_font_sizes/font_size = 15
+autowrap_mode = 2
+
+[node name="CoreHud" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("17_core_hud")
+
+[node name="BossBar" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_left = 400.0
+offset_top = 24.0
+offset_right = 880.0
+offset_bottom = 86.0
+color = Color(0.06, 0.018, 0.024, 0.94)
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="CanvasLayer/BossBar"]
+offset_top = 5.0
+offset_right = 480.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(1, 0.68, 0.45, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+text = "MUTANT COLOSSUS"
+
+[node name="Gauge" type="ProgressBar" parent="CanvasLayer/BossBar"]
+offset_left = 18.0
+offset_top = 31.0
+offset_right = 462.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.88, 0.82, 1)
+show_percentage = false
+
+[node name="UpgradeChoices" type="ColorRect" parent="CanvasLayer"]
+offset_left = 520.0
+offset_top = 180.0
+offset_right = 1150.0
+offset_bottom = 520.0
+color = Color(0.07, 0.11, 0.18, 0.98)
+mouse_filter = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/UpgradeChoices"]
+offset_left = 26.0
+offset_top = 24.0
+offset_right = 580.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 0.78, 0.36, 1)
+theme_override_font_sizes/font_size = 23
+text = "LEVEL UP"
+
+[node name="Choices" type="VBoxContainer" parent="CanvasLayer/UpgradeChoices"]
+offset_left = 26.0
+offset_top = 84.0
+offset_right = 604.0
+offset_bottom = 306.0
+theme_override_constants/separation = 12
+
+[node name="Choice0" type="Button" parent="CanvasLayer/UpgradeChoices/Choices"]
+custom_minimum_size = Vector2(0, 58)
+theme_override_font_sizes/font_size = 17
+
+[node name="Choice1" type="Button" parent="CanvasLayer/UpgradeChoices/Choices"]
+custom_minimum_size = Vector2(0, 58)
+theme_override_font_sizes/font_size = 17
+
+[node name="Choice2" type="Button" parent="CanvasLayer/UpgradeChoices/Choices"]
+custom_minimum_size = Vector2(0, 58)
+theme_override_font_sizes/font_size = 17
+
+[node name="Outcome" type="Label" parent="CanvasLayer"]
+offset_left = 520.0
+offset_top = 565.0
+offset_right = 1215.0
+offset_bottom = 690.0
+theme_override_colors/font_color = Color(1, 0.83, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 2
+
+[node name="OutcomeActions" type="HBoxContainer" parent="CanvasLayer"]
+visible = false
+offset_left = 520.0
+offset_top = 660.0
+offset_right = 1120.0
+offset_bottom = 710.0
+theme_override_constants/separation = 16
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/OutcomeActions"]
+custom_minimum_size = Vector2(230, 46)
+theme_override_font_sizes/font_size = 17
+text = "RESTART RUN"
+
+[node name="SelectButton" type="Button" parent="CanvasLayer/OutcomeActions"]
+custom_minimum_size = Vector2(310, 46)
+theme_override_font_sizes/font_size = 17
+text = "CHARACTER SELECT"
+
+[node name="PausePanel" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_left = 455.0
+offset_top = 170.0
+offset_right = 825.0
+offset_bottom = 515.0
+color = Color(0.025, 0.055, 0.1, 0.98)
+mouse_filter = 0
+
+[node name="Title" type="Label" parent="CanvasLayer/PausePanel"]
+offset_top = 38.0
+offset_right = 370.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(1, 0.82, 0.37, 1)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+text = "RUN PAUSED"
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/PausePanel"]
+offset_left = 52.0
+offset_top = 108.0
+offset_right = 318.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 18
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/PausePanel"]
+offset_left = 52.0
+offset_top = 183.0
+offset_right = 318.0
+offset_bottom = 239.0
+theme_override_font_sizes/font_size = 18
+text = "RESTART RUN"
+
+[node name="SelectButton" type="Button" parent="CanvasLayer/PausePanel"]
+offset_left = 52.0
+offset_top = 258.0
+offset_right = 318.0
+offset_bottom = 314.0
+theme_override_font_sizes/font_size = 18
+text = "CHARACTER SELECT"

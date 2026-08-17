@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="SterlingBasicTuning" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/player/sterling_basic_tuning.gd" id="1_tuning"]
+
+[resource]
+script = ExtResource("1_tuning")
+shots_per_second_idle = 4.5
+shots_per_second_at_max_speed = 8.5
+maximum_shots_per_second = 9.0
+movement_rate_exponent = 0.8
+projectile_damage = 16.0
+projectile_speed = 720.0
+projectile_lifetime_seconds = 1.25
+projectile_radius = 3.0
+muzzle_offset = 12.0
+basic_animation_hold_seconds = 0.1
+auto_aim_range = 820.0
+target_refresh_seconds = 0.12
+target_switch_distance_ratio = 0.82

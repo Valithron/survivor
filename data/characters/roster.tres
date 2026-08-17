@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="CharacterRosterDefinition" load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://game/data/character_roster_definition.gd" id="1_roster"]
+[ext_resource type="Script" path="res://game/data/character_roster_entry.gd" id="2_entry"]
+[ext_resource type="Resource" path="res://data/characters/sterling.tres" id="3_sterling"]
+[ext_resource type="Resource" path="res://data/characters/ryan.tres" id="4_ryan"]
+[ext_resource type="Resource" path="res://data/characters/cooper.tres" id="5_cooper"]
+[ext_resource type="PackedScene" path="res://game/player/sterling_player.tscn" id="6_sterling_scene"]
+[ext_resource type="PackedScene" path="res://game/player/ryan_player.tscn" id="7_ryan_scene"]
+[ext_resource type="PackedScene" path="res://game/player/cooper_player.tscn" id="8_cooper_scene"]
+
+[sub_resource type="Resource" id="RosterEntry_sterling"]
+script = ExtResource("2_entry")
+character = ExtResource("3_sterling")
+player_scene = ExtResource("6_sterling_scene")
+
+[sub_resource type="Resource" id="RosterEntry_ryan"]
+script = ExtResource("2_entry")
+character = ExtResource("4_ryan")
+player_scene = ExtResource("7_ryan_scene")
+
+[sub_resource type="Resource" id="RosterEntry_cooper"]
+script = ExtResource("2_entry")
+character = ExtResource("5_cooper")
+player_scene = ExtResource("8_cooper_scene")
+
+[resource]
+script = ExtResource("1_roster")
+entries = Array[ExtResource("2_entry")]([SubResource("RosterEntry_sterling"), SubResource("RosterEntry_ryan"), SubResource("RosterEntry_cooper")])

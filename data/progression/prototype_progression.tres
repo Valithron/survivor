@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProgressionDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://game/data/progression_definition.gd" id="1_definition"]
+
+[resource]
+script = ExtResource("1_definition")
+starting_level = 1
+level_up_total_xp_thresholds = PackedInt32Array(15, 35, 60, 90, 125, 165, 210, 260, 315, 375, 440, 510, 585, 665, 750)
+overflow_threshold_step = 100
+xp_attraction_radius = 220.0
+xp_attraction_speed = 720.0
+xp_collect_radius = 18.0
